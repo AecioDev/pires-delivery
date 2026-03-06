@@ -23,6 +23,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
+type Category = { id: string; name: string };
+
 export function CategorySelect({
   defaultValue,
   name,
@@ -30,30 +32,48 @@ export function CategorySelect({
   defaultValue?: string;
   name: string;
 }) {
-  const [categories, setCategories] = useState<{ id: string; name: string }[]>(
-    [],
-  );
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [newCatName, setNewCatName] = useState("");
   const [creating, setCreating] = useState(false);
-  const [value, setValue] = useState(defaultValue || "empty");
+  const [value, setValue] = useState<string>("");
 
-  const fetchCategories = async () => {
+  const fetchCategories = async (): Promise<Category[]> => {
     setLoading(true);
     try {
       const data = await getCategories();
       setCategories(data);
+      return data;
     } catch (e) {
       console.error(e);
+      return [];
     } finally {
       setLoading(false);
     }
   };
 
+  // Carrega categorias e, após o carregamento, define o valor selecionado
   useEffect(() => {
-    fetchCategories();
+    fetchCategories().then((data) => {
+      if (defaultValue && data.some((c) => c.id === defaultValue)) {
+        setValue(defaultValue);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Sincroniza caso o defaultValue mude (ex: ao abrir o dialog de edição de um produto diferente)
+  useEffect(() => {
+    if (!loading && categories.length > 0) {
+      if (defaultValue && categories.some((c) => c.id === defaultValue)) {
+        setValue(defaultValue);
+      } else {
+        setValue("");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValue]);
 
   const handleCreate = async () => {
     if (!newCatName.trim()) {
@@ -68,14 +88,11 @@ export function CategorySelect({
 
     if (res.success) {
       toast.success("Categoria criada!");
+      const capturedName = newCatName;
       setNewCatName("");
       setOpen(false);
-      await fetchCategories(); // refresh list
-      // Auto-select the newly created category (assuming the backend returns the id, or we just select it if we can find it)
-      // Since our action returns { success: true }, we need to rely on the fetched data to find the newest.
-      // Easiest is to select the new one by name from the newly fetched list:
-      const data = await getCategories();
-      const newCat = data.find((c) => c.name === newCatName);
+      const data = await fetchCategories();
+      const newCat = data.find((c) => c.name === capturedName);
       if (newCat) {
         setValue(newCat.id);
       }
@@ -89,7 +106,6 @@ export function CategorySelect({
       <Label htmlFor={name}>Categoria</Label>
       <div className="flex gap-2 items-center">
         <Select
-          key={loading ? "loading" : "loaded"}
           name={name}
           value={value}
           onValueChange={setValue}
@@ -108,8 +124,8 @@ export function CategorySelect({
                 {c.name}
               </SelectItem>
             ))}
-            {categories.length === 0 && (
-              <SelectItem value="empty" disabled>
+            {!loading && categories.length === 0 && (
+              <SelectItem value="__empty__" disabled>
                 Nenhuma categoria
               </SelectItem>
             )}

@@ -17,6 +17,7 @@ import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { UploadButton } from "@/lib/uploadthing";
 import Image from "next/image";
+import Link from "next/link";
 import { CurrencyInput } from "@/components/ui/currency-input";
 import { CategorySelect } from "./category-select";
 
@@ -35,6 +36,7 @@ type Product = {
   unit?: string | null;
   serves?: number | null;
   type: "ITEM" | "COMPOSITE" | "COMPONENT";
+  status?: "ACTIVE" | "INACTIVE" | "UNAVAILABLE";
   imageUrl: string | null;
 };
 
@@ -54,6 +56,9 @@ export function ProductForm({
   );
   const [productType, setProductType] = useState<string>(
     product?.type || defaultType || "ITEM",
+  );
+  const [productStatus, setProductStatus] = useState<string>(
+    product?.status || "ACTIVE",
   );
 
   // State for Currency Inputs
@@ -237,21 +242,53 @@ export function ProductForm({
           </Select>
         </div>
       </div>
-      <div className="grid w-full items-center gap-1.5">
-        <Label htmlFor="type">Tipo de Produto</Label>
-        <Select name="type" value={productType} onValueChange={setProductType}>
-          <SelectTrigger>
-            <SelectValue placeholder="Selecione" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="ITEM">Produto Padrão</SelectItem>
-            <SelectItem value="COMPOSITE">Montável (ex: Macarrão)</SelectItem>
-            <SelectItem value="COMPONENT">Insumo/Adicional</SelectItem>
-          </SelectContent>
-        </Select>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="type">Tipo de Produto</Label>
+          <Select
+            name="type"
+            value={productType}
+            onValueChange={setProductType}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ITEM">Produto Padrão</SelectItem>
+              <SelectItem value="COMPOSITE">Montável (ex: Macarrão)</SelectItem>
+              <SelectItem value="COMPONENT">Insumo/Adicional</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="status">Status na Loja</Label>
+          <Select
+            name="status"
+            value={productStatus}
+            onValueChange={setProductStatus}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ACTIVE">
+                Ativo (Visível e Selecionável)
+              </SelectItem>
+              <SelectItem value="UNAVAILABLE">
+                Inativo no Cardápio (Visível, Esgotado)
+              </SelectItem>
+              <SelectItem value="INACTIVE">Inativo (Oculto da Loja)</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      <div className="flex justify-end pt-4">
+      <div className="flex justify-end pt-4 gap-2">
+        <Link href="/produtos">
+          <Button type="button" variant="outline">
+            Voltar
+          </Button>
+        </Link>
         <SubmitButton isEdit={isEdit} />
       </div>
     </form>

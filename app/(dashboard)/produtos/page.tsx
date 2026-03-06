@@ -20,8 +20,18 @@ import { Trash2, UtensilsCrossed, ImageIcon, Pencil } from "lucide-react";
 import { ProductManager } from "@/components/products/product-manager";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-
 import { ProductFilters } from "@/components/products/product-filters";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export default async function ProductsPage(props: {
   searchParams: Promise<{ search?: string; type?: string }>;
@@ -60,6 +70,7 @@ export default async function ProductsPage(props: {
                 <TableHead>Nome</TableHead>
                 <TableHead>Categoria</TableHead>
                 <TableHead>Tipo</TableHead>
+                <TableHead>Status</TableHead>
                 <TableHead>Preço Base</TableHead>
                 <TableHead className="text-right">Ações</TableHead>
               </TableRow>
@@ -136,6 +147,32 @@ export default async function ProductsPage(props: {
                     )}
                   </TableCell>
                   <TableCell>
+                    {item.status === "ACTIVE" && (
+                      <Badge
+                        variant="outline"
+                        className="border-green-200 bg-green-50 text-green-700"
+                      >
+                        Ativo
+                      </Badge>
+                    )}
+                    {item.status === "UNAVAILABLE" && (
+                      <Badge
+                        variant="outline"
+                        className="border-orange-200 bg-orange-50 text-orange-700"
+                      >
+                        Esgotado
+                      </Badge>
+                    )}
+                    {item.status === "INACTIVE" && (
+                      <Badge
+                        variant="outline"
+                        className="bg-gray-100 text-gray-500"
+                      >
+                        Oculto
+                      </Badge>
+                    )}
+                  </TableCell>
+                  <TableCell>
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "BRL",
@@ -154,15 +191,41 @@ export default async function ProductsPage(props: {
                         </Button>
                       </Link>
 
-                      <form action={deleteProduct.bind(null, item.id)}>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="text-red-500 hover:text-red-600 hover:bg-red-50"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </form>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="text-red-500 hover:text-red-600 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent className="sm:max-w-[425px]">
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Você tem certeza?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Esta ação não pode ser desfeita. Isso excluirá
+                              permanentemente o produto{" "}
+                              <strong>{item.name}</strong> e o removerá de todos
+                              os registros e cardápios.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <form action={deleteProduct.bind(null, item.id)}>
+                              <AlertDialogAction
+                                type="submit"
+                                className="bg-red-600 hover:bg-red-700"
+                              >
+                                Sim, excluir produto
+                              </AlertDialogAction>
+                            </form>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </TableCell>
                 </TableRow>

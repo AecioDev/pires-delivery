@@ -24,6 +24,7 @@ interface ProductData {
   serves?: number | null;
   imageUrl: string | null;
   type?: string;
+  status?: string;
   modifiers?: SerializedModifier[];
 }
 
@@ -50,12 +51,15 @@ export function ProductCard({ product }: { product: ProductData }) {
   const isComposite =
     product.type === "COMPOSITE" ||
     (product.modifiers && product.modifiers.length > 0);
+  const isAvailable = product.status !== "UNAVAILABLE";
 
   const handleQuickAdd = (e?: React.MouseEvent) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
+
+    if (!isAvailable) return;
 
     if (isComposite) {
       router.push(`/produto/${product.id}`);
@@ -84,6 +88,7 @@ export function ProductCard({ product }: { product: ProductData }) {
   };
 
   const handleCardClick = () => {
+    if (!isAvailable) return;
     if (isComposite) {
       router.push(`/produto/${product.id}`);
     } else {
@@ -95,7 +100,11 @@ export function ProductCard({ product }: { product: ProductData }) {
     <>
       <Card
         onClick={handleCardClick}
-        className="flex flex-row overflow-hidden border border-gray-100 shadow-sm rounded-lg bg-white p-3 gap-3 transition-colors hover:border-orange-200 relative cursor-pointer group"
+        className={`flex flex-row overflow-hidden border border-gray-100 shadow-sm rounded-lg p-3 gap-3 transition-colors relative group ${
+          isAvailable
+            ? "bg-white hover:border-orange-200 cursor-pointer"
+            : "bg-gray-50 opacity-75 cursor-not-allowed grayscale-[0.2]"
+        }`}
       >
         {/* Text Content */}
         <div className="flex-1 flex flex-col justify-between py-1">
@@ -154,7 +163,11 @@ export function ProductCard({ product }: { product: ProductData }) {
           )}
 
           {/* Badge for Composite */}
-          {isComposite ? (
+          {!isAvailable ? (
+            <div className="absolute bottom-0 left-0 right-0 bg-gray-500/80 backdrop-blur-[2px] text-white text-[10px] font-bold text-center py-0.5">
+              Esgotado
+            </div>
+          ) : isComposite ? (
             <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-[2px] text-white text-[10px] font-bold text-center py-0.5">
               Montar
             </div>

@@ -88,6 +88,12 @@ enum ProductType {
   COMPONENT
 }
 
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+  UNAVAILABLE
+}
+
 model Product {
   id             String       @id @default(uuid())
   organizationId String
@@ -102,7 +108,8 @@ model Product {
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 
-  type ProductType @default(ITEM)
+  type   ProductType   @default(ITEM)
+  status ProductStatus @default(ACTIVE)
 
   isDishOfTheDay   Boolean  @default(false)
   promotionalPrice Decimal? @db.Decimal(10, 2)

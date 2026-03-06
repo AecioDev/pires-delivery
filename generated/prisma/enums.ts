@@ -27,6 +27,15 @@ export const ProductType = {
 export type ProductType = (typeof ProductType)[keyof typeof ProductType]
 
 
+export const ProductStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  UNAVAILABLE: 'UNAVAILABLE'
+} as const
+
+export type ProductStatus = (typeof ProductStatus)[keyof typeof ProductStatus]
+
+
 export const DeliveryMethod = {
   DELIVERY: 'DELIVERY',
   PICKUP: 'PICKUP'

@@ -13,7 +13,9 @@ export default async function ShopHomePage() {
   const logoUrl = settings?.logoUrl || "/logo_sf.png";
 
   const allProducts = await getProducts();
-  const shopProducts = allProducts.filter((p) => p.type !== "COMPONENT");
+  const shopProducts = allProducts.filter(
+    (p) => p.type !== "COMPONENT" && p.status !== "INACTIVE",
+  );
 
   // Filter highlights
   const highlights = shopProducts.filter((p) => {
@@ -100,6 +102,7 @@ export default async function ShopHomePage() {
                   isDishOfTheDay: p.isDishOfTheDay,
                   imageUrl: p.imageUrl,
                   type: p.type,
+                  status: p.status,
                   modifiers: [], // Not fetched in list view
                 }}
               />
@@ -133,6 +136,7 @@ export default async function ShopHomePage() {
                       serves: product.serves,
                       imageUrl: product.imageUrl,
                       type: product.type,
+                      status: product.status,
                       modifiers: [],
                     }}
                   />

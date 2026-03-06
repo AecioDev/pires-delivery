@@ -7,7 +7,6 @@ import {
   SerializedProduct,
 } from "@/lib/store/cart";
 import { Plus, Search, Star, Users } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Image from "next/image";
@@ -22,6 +21,7 @@ interface FeaturedProductData {
   isDishOfTheDay?: boolean;
   imageUrl: string | null;
   type?: string;
+  status?: string;
   modifiers?: SerializedModifier[];
 }
 
@@ -34,6 +34,7 @@ export function FeaturedProductCard({
   const addItem = useCartStore((state) => state.addItem);
 
   const price = product.promotionalPrice || product.basePrice;
+  const isAvailable = product.status !== "UNAVAILABLE";
   const isPromo =
     product.promotionalPrice && product.promotionalPrice < product.basePrice;
   const isComposite =
@@ -43,6 +44,8 @@ export function FeaturedProductCard({
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (!isAvailable) return;
 
     if (isComposite) {
       router.push(`/produto/${product.id}`);
@@ -71,7 +74,12 @@ export function FeaturedProductCard({
 
   return (
     <div className="flex-none w-[200px] sm:w-[240px]">
-      <Link href={`/produto/${product.id}`} className="block group h-full">
+      <div
+        onClick={() => {
+          if (isAvailable) router.push(`/produto/${product.id}`);
+        }}
+        className={`group h-full ${isAvailable ? "cursor-pointer block" : "cursor-not-allowed opacity-75 grayscale-[0.2]"}`}
+      >
         <Card className="overflow-hidden border-0 shadow-md rounded-2xl bg-white h-full relative flex flex-col">
           {/* Image Area */}
           <div className="h-32 sm:h-40 bg-gray-100 relative overflow-hidden">
@@ -141,7 +149,11 @@ export function FeaturedProductCard({
               </div>
 
               {/* Quick Add Button */}
-              {!isComposite ? (
+              {!isAvailable ? (
+                <span className="text-[10px] uppercase font-bold text-gray-400">
+                  Esgotado
+                </span>
+              ) : !isComposite ? (
                 <button
                   onClick={handleQuickAdd}
                   className="bg-orange-600 text-white rounded-full p-1.5 shadow-md active:scale-95 transition-transform hover:bg-orange-700"
@@ -156,7 +168,7 @@ export function FeaturedProductCard({
             </div>
           </CardContent>
         </Card>
-      </Link>
+      </div>
     </div>
   );
 }

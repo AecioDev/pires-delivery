@@ -73,10 +73,7 @@ export default async function ProductDetailsPage({
       </div>
 
       {/* Main Content */}
-      <Tabs
-        defaultValue={product.type === "COMPOSITE" ? "modifiers" : "general"}
-        className="w-full"
-      >
+      <Tabs defaultValue="general" className="w-full">
         <TabsList>
           <TabsTrigger value="general">Informações Gerais</TabsTrigger>
           {product.type === "COMPOSITE" && (
@@ -110,6 +107,10 @@ export default async function ProductDetailsPage({
                     : null,
                   serves: product.serves,
                   type: product.type as "ITEM" | "COMPOSITE" | "COMPONENT",
+                  status: product.status as
+                    | "ACTIVE"
+                    | "INACTIVE"
+                    | "UNAVAILABLE",
                   imageUrl: product.imageUrl,
                 }}
               />

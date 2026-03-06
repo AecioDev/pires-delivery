@@ -146,6 +146,7 @@ export const ProductScalarFieldEnum = {
   imageUrl: 'imageUrl',
   categoryId: 'categoryId',
   type: 'type',
+  status: 'status',
   isDishOfTheDay: 'isDishOfTheDay',
   promotionalPrice: 'promotionalPrice',
   serves: 'serves',

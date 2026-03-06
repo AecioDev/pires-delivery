@@ -11,7 +11,7 @@ const getOrganizationId = async () => {
     return (await prisma.organization.create({ data: { name: "Minha Loja", slug: "minha-loja" } })).id;
 };
 
-import { Prisma, ProductType } from "@/generated/prisma/client";
+import { Prisma, ProductType, ProductStatus } from "@/generated/prisma/client";
 
 export async function getProducts(search?: string, type?: string) {
   const organizationId = await getOrganizationId();
@@ -51,6 +51,7 @@ export async function createProduct(formData: FormData) {
   const promotionalPrice = parseFloat(formData.get("promotionalPrice") as string || "0");
   
   const type = (formData.get("type") as "ITEM" | "COMPOSITE" | "COMPONENT") || "ITEM";
+  const status = (formData.get("status") as ProductStatus) || "ACTIVE";
   const imageUrl = formData.get("imageUrl") as string | null;
   let categoryId = formData.get("categoryId") as string | null;
   if (categoryId === "empty" || categoryId === "") categoryId = null;
@@ -69,6 +70,7 @@ export async function createProduct(formData: FormData) {
       serves,
       promotionalPrice: promotionalPrice > 0 ? promotionalPrice : null,
       type,
+      status,
       imageUrl,
       categoryId,
     },
@@ -91,6 +93,7 @@ export async function updateProduct(id: string, formData: FormData) {
     const promotionalPrice = parseFloat(formData.get("promotionalPrice") as string || "0");
     
     const type = (formData.get("type") as "ITEM" | "COMPOSITE" | "COMPONENT") || "ITEM";
+    const status = (formData.get("status") as ProductStatus) || "ACTIVE";
     const imageUrl = formData.get("imageUrl") as string | null;
     let categoryId = formData.get("categoryId") as string | null;
     if (categoryId === "empty" || categoryId === "") categoryId = null;
@@ -109,6 +112,7 @@ export async function updateProduct(id: string, formData: FormData) {
         serves,
         promotionalPrice: promotionalPrice > 0 ? promotionalPrice : null,
         type,
+        status,
         imageUrl,
         categoryId,
       },

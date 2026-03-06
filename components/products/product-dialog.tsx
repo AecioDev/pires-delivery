@@ -17,6 +17,7 @@ import { ProductForm } from "./product-form";
 type Product = {
   id: string;
   name: string;
+  categoryId?: string | null;
   description: string | null;
   basePrice: number | null;
   type: "ITEM" | "COMPOSITE" | "COMPONENT";

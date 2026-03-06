@@ -54,6 +54,7 @@ export type ProductMinAggregateOutputType = {
   imageUrl: string | null
   categoryId: string | null
   type: $Enums.ProductType | null
+  status: $Enums.ProductStatus | null
   isDishOfTheDay: boolean | null
   promotionalPrice: runtime.Decimal | null
   serves: number | null
@@ -75,6 +76,7 @@ export type ProductMaxAggregateOutputType = {
   imageUrl: string | null
   categoryId: string | null
   type: $Enums.ProductType | null
+  status: $Enums.ProductStatus | null
   isDishOfTheDay: boolean | null
   promotionalPrice: runtime.Decimal | null
   serves: number | null
@@ -96,6 +98,7 @@ export type ProductCountAggregateOutputType = {
   imageUrl: number
   categoryId: number
   type: number
+  status: number
   isDishOfTheDay: number
   promotionalPrice: number
   serves: number
@@ -137,6 +140,7 @@ export type ProductMinAggregateInputType = {
   imageUrl?: true
   categoryId?: true
   type?: true
+  status?: true
   isDishOfTheDay?: true
   promotionalPrice?: true
   serves?: true
@@ -158,6 +162,7 @@ export type ProductMaxAggregateInputType = {
   imageUrl?: true
   categoryId?: true
   type?: true
+  status?: true
   isDishOfTheDay?: true
   promotionalPrice?: true
   serves?: true
@@ -179,6 +184,7 @@ export type ProductCountAggregateInputType = {
   imageUrl?: true
   categoryId?: true
   type?: true
+  status?: true
   isDishOfTheDay?: true
   promotionalPrice?: true
   serves?: true
@@ -287,6 +293,7 @@ export type ProductGroupByOutputType = {
   imageUrl: string | null
   categoryId: string | null
   type: $Enums.ProductType
+  status: $Enums.ProductStatus
   isDishOfTheDay: boolean
   promotionalPrice: runtime.Decimal | null
   serves: number | null
@@ -331,6 +338,7 @@ export type ProductWhereInput = {
   imageUrl?: Prisma.StringNullableFilter<"Product"> | string | null
   categoryId?: Prisma.StringNullableFilter<"Product"> | string | null
   type?: Prisma.EnumProductTypeFilter<"Product"> | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFilter<"Product"> | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFilter<"Product"> | boolean
   promotionalPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.IntNullableFilter<"Product"> | number | null
@@ -358,6 +366,7 @@ export type ProductOrderByWithRelationInput = {
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isDishOfTheDay?: Prisma.SortOrder
   promotionalPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   serves?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -388,6 +397,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   imageUrl?: Prisma.StringNullableFilter<"Product"> | string | null
   categoryId?: Prisma.StringNullableFilter<"Product"> | string | null
   type?: Prisma.EnumProductTypeFilter<"Product"> | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFilter<"Product"> | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFilter<"Product"> | boolean
   promotionalPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.IntNullableFilter<"Product"> | number | null
@@ -415,6 +425,7 @@ export type ProductOrderByWithAggregationInput = {
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isDishOfTheDay?: Prisma.SortOrder
   promotionalPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   serves?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -444,6 +455,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   categoryId?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   type?: Prisma.EnumProductTypeWithAggregatesFilter<"Product"> | $Enums.ProductType
+  status?: Prisma.EnumProductStatusWithAggregatesFilter<"Product"> | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   promotionalPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
@@ -463,6 +475,7 @@ export type ProductCreateInput = {
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -490,6 +503,7 @@ export type ProductUncheckedCreateInput = {
   imageUrl?: string | null
   categoryId?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -513,6 +527,7 @@ export type ProductUpdateInput = {
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -540,6 +555,7 @@ export type ProductUncheckedUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -565,6 +581,7 @@ export type ProductCreateManyInput = {
   imageUrl?: string | null
   categoryId?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -584,6 +601,7 @@ export type ProductUpdateManyMutationInput = {
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -605,6 +623,7 @@ export type ProductUncheckedUpdateManyInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -636,6 +655,7 @@ export type ProductCountOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isDishOfTheDay?: Prisma.SortOrder
   promotionalPrice?: Prisma.SortOrder
   serves?: Prisma.SortOrder
@@ -666,6 +686,7 @@ export type ProductMaxOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isDishOfTheDay?: Prisma.SortOrder
   promotionalPrice?: Prisma.SortOrder
   serves?: Prisma.SortOrder
@@ -687,6 +708,7 @@ export type ProductMinOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isDishOfTheDay?: Prisma.SortOrder
   promotionalPrice?: Prisma.SortOrder
   serves?: Prisma.SortOrder
@@ -805,6 +827,10 @@ export type EnumProductTypeFieldUpdateOperationsInput = {
   set?: $Enums.ProductType
 }
 
+export type EnumProductStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ProductStatus
+}
+
 export type NullableDecimalFieldUpdateOperationsInput = {
   set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -887,6 +913,7 @@ export type ProductCreateWithoutOrganizationInput = {
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -912,6 +939,7 @@ export type ProductUncheckedCreateWithoutOrganizationInput = {
   imageUrl?: string | null
   categoryId?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -966,6 +994,7 @@ export type ProductScalarWhereInput = {
   imageUrl?: Prisma.StringNullableFilter<"Product"> | string | null
   categoryId?: Prisma.StringNullableFilter<"Product"> | string | null
   type?: Prisma.EnumProductTypeFilter<"Product"> | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFilter<"Product"> | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFilter<"Product"> | boolean
   promotionalPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.IntNullableFilter<"Product"> | number | null
@@ -985,6 +1014,7 @@ export type ProductCreateWithoutCategoryInput = {
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1010,6 +1040,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1059,6 +1090,7 @@ export type ProductCreateWithoutRecipesInput = {
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1085,6 +1117,7 @@ export type ProductUncheckedCreateWithoutRecipesInput = {
   imageUrl?: string | null
   categoryId?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1123,6 +1156,7 @@ export type ProductUpdateWithoutRecipesInput = {
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1149,6 +1183,7 @@ export type ProductUncheckedUpdateWithoutRecipesInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1171,6 +1206,7 @@ export type ProductCreateWithoutModifiersInput = {
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1197,6 +1233,7 @@ export type ProductUncheckedCreateWithoutModifiersInput = {
   imageUrl?: string | null
   categoryId?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1235,6 +1272,7 @@ export type ProductUpdateWithoutModifiersInput = {
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1261,6 +1299,7 @@ export type ProductUncheckedUpdateWithoutModifiersInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1283,6 +1322,7 @@ export type ProductCreateWithoutModifierOptionsInput = {
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1309,6 +1349,7 @@ export type ProductUncheckedCreateWithoutModifierOptionsInput = {
   imageUrl?: string | null
   categoryId?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1347,6 +1388,7 @@ export type ProductUpdateWithoutModifierOptionsInput = {
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1373,6 +1415,7 @@ export type ProductUncheckedUpdateWithoutModifierOptionsInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1395,6 +1438,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1421,6 +1465,7 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   imageUrl?: string | null
   categoryId?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1459,6 +1504,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1485,6 +1531,7 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1508,6 +1555,7 @@ export type ProductCreateManyOrganizationInput = {
   imageUrl?: string | null
   categoryId?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1527,6 +1575,7 @@ export type ProductUpdateWithoutOrganizationInput = {
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1552,6 +1601,7 @@ export type ProductUncheckedUpdateWithoutOrganizationInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1576,6 +1626,7 @@ export type ProductUncheckedUpdateManyWithoutOrganizationInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1596,6 +1647,7 @@ export type ProductCreateManyCategoryInput = {
   basePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: string | null
   type?: $Enums.ProductType
+  status?: $Enums.ProductStatus
   isDishOfTheDay?: boolean
   promotionalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: number | null
@@ -1615,6 +1667,7 @@ export type ProductUpdateWithoutCategoryInput = {
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1640,6 +1693,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1664,6 +1718,7 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   basePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
+  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   isDishOfTheDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   promotionalPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   serves?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1743,6 +1798,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   imageUrl?: boolean
   categoryId?: boolean
   type?: boolean
+  status?: boolean
   isDishOfTheDay?: boolean
   promotionalPrice?: boolean
   serves?: boolean
@@ -1771,6 +1827,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   imageUrl?: boolean
   categoryId?: boolean
   type?: boolean
+  status?: boolean
   isDishOfTheDay?: boolean
   promotionalPrice?: boolean
   serves?: boolean
@@ -1794,6 +1851,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   imageUrl?: boolean
   categoryId?: boolean
   type?: boolean
+  status?: boolean
   isDishOfTheDay?: boolean
   promotionalPrice?: boolean
   serves?: boolean
@@ -1817,6 +1875,7 @@ export type ProductSelectScalar = {
   imageUrl?: boolean
   categoryId?: boolean
   type?: boolean
+  status?: boolean
   isDishOfTheDay?: boolean
   promotionalPrice?: boolean
   serves?: boolean
@@ -1828,7 +1887,7 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "name" | "shortName" | "description" | "basePrice" | "imageUrl" | "categoryId" | "type" | "isDishOfTheDay" | "promotionalPrice" | "serves" | "costPrice" | "stock" | "unit" | "minStockLevel" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "name" | "shortName" | "description" | "basePrice" | "imageUrl" | "categoryId" | "type" | "status" | "isDishOfTheDay" | "promotionalPrice" | "serves" | "costPrice" | "stock" | "unit" | "minStockLevel" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Product$categoryArgs<ExtArgs>
@@ -1867,6 +1926,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     imageUrl: string | null
     categoryId: string | null
     type: $Enums.ProductType
+    status: $Enums.ProductStatus
     isDishOfTheDay: boolean
     promotionalPrice: runtime.Decimal | null
     serves: number | null
@@ -2314,6 +2374,7 @@ export interface ProductFieldRefs {
   readonly imageUrl: Prisma.FieldRef<"Product", 'String'>
   readonly categoryId: Prisma.FieldRef<"Product", 'String'>
   readonly type: Prisma.FieldRef<"Product", 'ProductType'>
+  readonly status: Prisma.FieldRef<"Product", 'ProductStatus'>
   readonly isDishOfTheDay: Prisma.FieldRef<"Product", 'Boolean'>
   readonly promotionalPrice: Prisma.FieldRef<"Product", 'Decimal'>
   readonly serves: Prisma.FieldRef<"Product", 'Int'>
