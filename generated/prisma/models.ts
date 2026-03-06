@@ -9,6 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Organization'
+export type * from './models/Category'
 export type * from './models/Profile'
 export type * from './models/Ingredient'
 export type * from './models/Product'
@@ -19,4 +20,5 @@ export type * from './models/Customer'
 export type * from './models/CustomerAddress'
 export type * from './models/Order'
 export type * from './models/OrderItem'
+export type * from './models/Neighborhood'
 export type * from './commonInputTypes'

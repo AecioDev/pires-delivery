@@ -27,12 +27,14 @@ interface ProductDialogProps {
   product?: Product;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  defaultType?: "ITEM" | "COMPOSITE" | "COMPONENT";
 }
 
 export function ProductDialog({
   product,
   open: controlledOpen,
   onOpenChange: setControlledOpen,
+  defaultType,
 }: ProductDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const isEdit = !!product;
@@ -74,6 +76,7 @@ export function ProductDialog({
         <div className="py-4">
           <ProductForm
             product={product}
+            defaultType={defaultType}
             onSuccess={() => handleOpenChange(false)}
           />
         </div>

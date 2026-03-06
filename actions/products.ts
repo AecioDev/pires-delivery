@@ -31,6 +31,7 @@ export async function getProducts(search?: string, type?: string) {
 
   return await prisma.product.findMany({
     where,
+    include: { category: true },
     orderBy: { name: "asc" },
   });
 }
@@ -51,6 +52,8 @@ export async function createProduct(formData: FormData) {
   
   const type = (formData.get("type") as "ITEM" | "COMPOSITE" | "COMPONENT") || "ITEM";
   const imageUrl = formData.get("imageUrl") as string | null;
+  let categoryId = formData.get("categoryId") as string | null;
+  if (categoryId === "empty" || categoryId === "") categoryId = null;
 
   await prisma.product.create({
     data: {
@@ -67,6 +70,7 @@ export async function createProduct(formData: FormData) {
       promotionalPrice: promotionalPrice > 0 ? promotionalPrice : null,
       type,
       imageUrl,
+      categoryId,
     },
   });
 
@@ -88,6 +92,8 @@ export async function updateProduct(id: string, formData: FormData) {
     
     const type = (formData.get("type") as "ITEM" | "COMPOSITE" | "COMPONENT") || "ITEM";
     const imageUrl = formData.get("imageUrl") as string | null;
+    let categoryId = formData.get("categoryId") as string | null;
+    if (categoryId === "empty" || categoryId === "") categoryId = null;
   
     await prisma.product.update({
       where: { id },
@@ -104,6 +110,7 @@ export async function updateProduct(id: string, formData: FormData) {
         promotionalPrice: promotionalPrice > 0 ? promotionalPrice : null,
         type,
         imageUrl,
+        categoryId,
       },
     });
   

@@ -33,7 +33,18 @@ export async function createOrder(data: CheckoutData) {
         return { success: false, message: "A loja está fechada no momento." };
     }
 
-    const currentDeliveryFee = data.deliveryMethod === "DELIVERY" ? Number(org.deliveryFee) : 0;
+    let currentDeliveryFee = 0;
+    if (data.deliveryMethod === "DELIVERY" && data.address?.neighborhood) {
+      const neighborhood = await prisma.neighborhood.findFirst({
+         where: { organizationId: org.id, name: data.address.neighborhood }
+      });
+      if (neighborhood) {
+         currentDeliveryFee = Number(neighborhood.fee);
+      } else {
+         currentDeliveryFee = Number(org.deliveryFee); // Fallback
+      }
+    }
+
     const finalTotal = data.total + currentDeliveryFee;
 
     // 2. Find or Create Customer

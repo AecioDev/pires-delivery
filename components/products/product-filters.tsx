@@ -15,7 +15,11 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 
-export function ProductFilters() {
+export function ProductFilters({
+  hideTypeFilter,
+}: {
+  hideTypeFilter?: boolean;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -52,21 +56,25 @@ export function ProductFilters() {
   return (
     <Card className="mb-6">
       <CardContent className="pt-6">
-        <div className="grid grid-cols-1 sm:grid-cols-[200px_1fr] gap-4 items-end">
-          <div className="space-y-2">
-            <Label>Tipo</Label>
-            <Select value={type} onValueChange={setType}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Selecione..." />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ALL">Todos</SelectItem>
-                <SelectItem value="ITEM">Simples</SelectItem>
-                <SelectItem value="COMPOSITE">Montável</SelectItem>
-                <SelectItem value="COMPONENT">Insumo</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        <div
+          className={`grid grid-cols-1 ${hideTypeFilter ? "" : "sm:grid-cols-[200px_1fr]"} gap-4 items-end`}
+        >
+          {!hideTypeFilter && (
+            <div className="space-y-2">
+              <Label>Tipo</Label>
+              <Select value={type} onValueChange={setType}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Selecione..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ALL">Todos</SelectItem>
+                  <SelectItem value="ITEM">Simples</SelectItem>
+                  <SelectItem value="COMPOSITE">Montável</SelectItem>
+                  <SelectItem value="COMPONENT">Insumo</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           <div className="space-y-2">
             <Label>Nome</Label>
             <div className="relative">

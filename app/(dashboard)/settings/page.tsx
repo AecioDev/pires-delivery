@@ -14,7 +14,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { Store, Phone, Truck, Save } from "lucide-react";
+import { Store, Phone, Truck, Save, Image as ImageIcon } from "lucide-react";
+import { UploadButton } from "@/lib/uploadthing";
+import Image from "next/image";
+import { NeighborhoodSettings } from "@/components/admin/neighborhood-settings";
 
 export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
@@ -22,6 +25,7 @@ export default function SettingsPage() {
   const [formData, setFormData] = useState({
     name: "",
     whatsappPhone: "",
+    logoUrl: "",
     isOpen: true,
     deliveryFee: 0,
   });
@@ -34,6 +38,7 @@ export default function SettingsPage() {
           setFormData({
             name: data.name || "",
             whatsappPhone: data.whatsappPhone || "",
+            logoUrl: data.logoUrl || "",
             isOpen: data.isOpen,
             deliveryFee: data.deliveryFee,
           });
@@ -61,6 +66,7 @@ export default function SettingsPage() {
       const res = await updateSettings({
         name: formData.name,
         whatsappPhone: sanitizedPhone || null,
+        logoUrl: formData.logoUrl || null,
         isOpen: formData.isOpen,
         deliveryFee: Number(formData.deliveryFee),
       });
@@ -148,6 +154,47 @@ export default function SettingsPage() {
               />
             </div>
 
+            <div className="space-y-2 border rounded-xl p-4">
+              <Label className="flex items-center gap-2 mb-2">
+                <ImageIcon className="w-4 h-4 text-slate-500" />
+                Logotipo da Loja
+              </Label>
+              <div className="flex items-center gap-6">
+                <div className="relative w-24 h-24 rounded-xl border-2 border-dashed border-slate-200 overflow-hidden flex items-center justify-center bg-slate-50">
+                  {formData.logoUrl ? (
+                    <Image
+                      src={formData.logoUrl}
+                      alt="Logo"
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <Store className="w-8 h-8 text-slate-300" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <UploadButton
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(
+                      res: { url: string }[] | undefined,
+                    ) => {
+                      if (res && res[0]) {
+                        handleChange("logoUrl", res[0].url);
+                        toast.success("Logo atualizada com sucesso!");
+                      }
+                    }}
+                    onUploadError={(error: Error) => {
+                      toast.error(`Erro ao enviar foto: ${error.message}`);
+                    }}
+                  />
+                  <p className="text-xs text-gray-500 mt-2">
+                    Fundo transparente e imagens quadradas (PNG) funcionam
+                    melhor.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="whatsapp" className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-green-600" />
@@ -196,6 +243,9 @@ export default function SettingsPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Bairros de Entrega */}
+        <NeighborhoodSettings />
 
         <div className="flex justify-end pt-4">
           <Button

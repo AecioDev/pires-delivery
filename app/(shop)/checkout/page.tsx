@@ -9,10 +9,18 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ChevronLeft, Truck, Store, Wallet, MapPin } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
 import { createOrder } from "@/actions/checkout";
 import { lookupCustomer } from "@/actions/lookup-customer";
 import { getSettings } from "@/actions/settings";
+import { getNeighborhoods } from "@/actions/neighborhoods";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -24,6 +32,9 @@ export default function CheckoutPage() {
     isOpen: boolean;
     deliveryFee: number;
   } | null>(null);
+  const [neighborhoods, setNeighborhoods] = useState<
+    { name: string; fee: number; active: boolean }[]
+  >([]);
 
   useEffect(() => {
     getSettings().then((s) => {
@@ -31,6 +42,9 @@ export default function CheckoutPage() {
         setSettings({ isOpen: s.isOpen, deliveryFee: s.deliveryFee });
       }
     });
+    getNeighborhoods().then((n) =>
+      setNeighborhoods(n.filter((nb) => nb.active)),
+    );
   }, []);
 
   // ... (formData state remains same)
@@ -302,14 +316,23 @@ export default function CheckoutPage() {
                   </div>
                   <div>
                     <Label htmlFor="neighborhood">Bairro</Label>
-                    <Input
-                      id="neighborhood"
+                    <Select
                       value={formData.address.neighborhood}
-                      onChange={(e) =>
-                        handleAddressChange("neighborhood", e.target.value)
+                      onValueChange={(val) =>
+                        handleAddressChange("neighborhood", val)
                       }
-                      placeholder="Centro"
-                    />
+                    >
+                      <SelectTrigger className="w-full mt-1">
+                        <SelectValue placeholder="Selecione o Bairro" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {neighborhoods.map((n) => (
+                          <SelectItem key={n.name} value={n.name}>
+                            {n.name} - R$ {n.fee.toFixed(2)}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div>
                     <Label htmlFor="complement">Complemento (Opcional)</Label>
@@ -423,32 +446,42 @@ export default function CheckoutPage() {
             </div>
           )}
 
-          {formData.deliveryMethod === "DELIVERY" &&
-            settings &&
-            settings.deliveryFee > 0 && (
-              <div className="max-w-lg mx-auto flex items-center justify-between mb-2">
-                <div className="text-sm text-gray-500">Taxa de Entrega</div>
-                <div className="text-sm font-medium text-gray-700">
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(settings.deliveryFee)}
-                </div>
+          <div className="max-w-lg mx-auto">
+            {formData.deliveryMethod === "DELIVERY" && (
+              <div className="flex justify-between items-center text-sm font-medium pt-3 border-t">
+                <span className="text-gray-600">Taxa de Entrega</span>
+                <span className="text-gray-900">
+                  {formData.deliveryMethod === "DELIVERY"
+                    ? (() => {
+                        const nb = neighborhoods.find(
+                          (n) => n.name === formData.address.neighborhood,
+                        );
+                        const fee = nb ? nb.fee : settings?.deliveryFee || 0;
+                        return fee > 0 ? `+ R$ ${fee.toFixed(2)}` : "Grátis";
+                      })()
+                    : "Grátis"}
+                </span>
               </div>
             )}
 
-          <div className="max-w-lg mx-auto flex items-center justify-between mb-4">
-            <div className="text-sm text-gray-500">Total a pagar</div>
-            <div className="text-xl font-bold text-gray-900">
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(
-                total +
-                  (formData.deliveryMethod === "DELIVERY" && settings
-                    ? settings.deliveryFee
-                    : 0),
-              )}
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-sm text-gray-500">Total a pagar</div>
+              <div className="text-xl font-bold text-gray-900">
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(
+                  total +
+                    (formData.deliveryMethod === "DELIVERY"
+                      ? (() => {
+                          const nb = neighborhoods.find(
+                            (n) => n.name === formData.address.neighborhood,
+                          );
+                          return nb ? nb.fee : settings?.deliveryFee || 0;
+                        })()
+                      : 0),
+                )}
+              </div>
             </div>
           </div>
           <Button

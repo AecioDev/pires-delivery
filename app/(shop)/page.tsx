@@ -1,11 +1,17 @@
 import { getProducts } from "@/actions/products";
+import { getSettings } from "@/actions/settings";
 import { ProductCard } from "@/components/shop/product-card";
 import { FeaturedProductCard } from "@/components/shop/featured-product-card";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import Image from "next/image";
+import { CategoryNav } from "@/components/shop/category-nav";
 
 export default async function ShopHomePage() {
+  const settings = await getSettings();
+  const storeName = settings?.name || "Salgados.ai";
+  const logoUrl = settings?.logoUrl || "/logo_sf.png";
+
   const allProducts = await getProducts();
   const shopProducts = allProducts.filter((p) => p.type !== "COMPONENT");
 
@@ -17,13 +23,24 @@ export default async function ShopHomePage() {
     return isDish || (promo > 0 && promo < base);
   });
 
-  const categories = [
-    "Todos",
-    "Mais Pedidos",
-    "Combos",
-    "Bebidas",
-    "Sobremesas",
-  ];
+  // Group products by category
+  const categoriesMap = new Map<string, typeof shopProducts>();
+
+  shopProducts.forEach((p) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const catName = (p as any).category?.name || "Diversos";
+    if (!categoriesMap.has(catName)) {
+      categoriesMap.set(catName, []);
+    }
+    categoriesMap.get(catName)!.push(p);
+  });
+
+  // Extract keys and ensure "Diversos" is at the end if present
+  let categoryNames = Array.from(categoriesMap.keys());
+  if (categoryNames.includes("Diversos")) {
+    categoryNames = categoryNames.filter((c) => c !== "Diversos");
+    categoryNames.push("Diversos");
+  }
 
   return (
     <div className="space-y-6 pb-8">
@@ -31,14 +48,14 @@ export default async function ShopHomePage() {
       <div className="bg-white rounded-xl p-4 shadow-sm border text-center space-y-2">
         <div className="flex justify-center mb-2">
           <Image
-            src="/logo_sf.png"
-            alt="Casa Pires Logo"
+            src={logoUrl}
+            alt={`${storeName} Logo`}
             width={100}
             height={100}
             className="h-24 w-auto object-contain"
           />
         </div>
-        <h1 className="text-xl font-bold">Casa Pires Delivery</h1>
+        <h1 className="text-xl font-bold">{storeName}</h1>
         <div className="text-sm text-gray-500 flex items-center justify-center gap-2">
           <span>Aberto agora</span>
           <span>•</span>
@@ -56,22 +73,9 @@ export default async function ShopHomePage() {
         />
       </div>
 
-      {/* Categories */}
+      {/* Categories Nav (Sticky & Interactive) */}
       <section>
-        <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-          {categories.map((cat, i) => (
-            <button
-              key={cat}
-              className={`flex-none px-4 py-2 rounded-lg text-sm font-medium transition-all active:scale-95 ${
-                i === 0
-                  ? "bg-foreground text-background font-bold border-foreground"
-                  : "bg-white text-gray-600 border border-gray-200"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        <CategoryNav categories={categoryNames} />
       </section>
 
       {/* Destaques (Dynamic) */}
@@ -104,38 +108,46 @@ export default async function ShopHomePage() {
         </section>
       )}
 
-      {/* Product List */}
-      <section>
-        <h2 className="text-lg font-bold text-foreground mb-3 px-1">
-          Cardápio
-        </h2>
-        <div className="space-y-3">
-          {shopProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={{
-                id: product.id,
-                name: product.name,
-                description: product.description,
-                basePrice: Number(product.basePrice),
-                promotionalPrice: product.promotionalPrice
-                  ? Number(product.promotionalPrice)
-                  : null,
-                serves: product.serves,
-                imageUrl: product.imageUrl,
-                type: product.type,
-                modifiers: [],
-              }}
-            />
-          ))}
-        </div>
+      {/* Default padding block for sticky offset compensation */}
+      <div className="pt-2">
+        {categoryNames.map((catName) => {
+          const productsGroup = categoriesMap.get(catName) || [];
+
+          return (
+            <section key={catName} id={catName} className="mb-8 scroll-mt-28">
+              <h2 className="text-xl font-bold text-foreground mb-4 px-1 pb-2 border-b">
+                {catName}
+              </h2>
+              <div className="space-y-3">
+                {productsGroup.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      description: product.description,
+                      basePrice: Number(product.basePrice),
+                      promotionalPrice: product.promotionalPrice
+                        ? Number(product.promotionalPrice)
+                        : null,
+                      serves: product.serves,
+                      imageUrl: product.imageUrl,
+                      type: product.type,
+                      modifiers: [],
+                    }}
+                  />
+                ))}
+              </div>
+            </section>
+          );
+        })}
 
         {shopProducts.length === 0 && (
           <div className="text-center py-10 text-muted-foreground">
             <p>Nenhum item disponível.</p>
           </div>
         )}
-      </section>
+      </div>
     </div>
   );
 }

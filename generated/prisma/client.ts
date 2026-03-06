@@ -45,6 +45,11 @@ export { Prisma }
  */
 export type Organization = Prisma.OrganizationModel
 /**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
+/**
  * Model Profile
  * 
  */
@@ -94,3 +99,8 @@ export type Order = Prisma.OrderModel
  * 
  */
 export type OrderItem = Prisma.OrderItemModel
+/**
+ * Model Neighborhood
+ * 
+ */
+export type Neighborhood = Prisma.NeighborhoodModel

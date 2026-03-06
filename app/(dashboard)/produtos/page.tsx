@@ -28,6 +28,7 @@ export default async function ProductsPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const products = await getProducts(searchParams.search, searchParams.type);
+  const displayProducts = products.filter((p) => p.type !== "COMPONENT");
 
   return (
     <div className="p-8 space-y-6">
@@ -48,7 +49,7 @@ export default async function ProductsPage(props: {
         <CardHeader>
           <CardTitle>Lista de Produtos</CardTitle>
           <CardDescription>
-            {products.length} itens no cardápio.
+            {displayProducts.length} itens no cardápio.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -57,23 +58,24 @@ export default async function ProductsPage(props: {
               <TableRow>
                 <TableHead className="w-[80px]">Foto</TableHead>
                 <TableHead>Nome</TableHead>
+                <TableHead>Categoria</TableHead>
                 <TableHead>Tipo</TableHead>
                 <TableHead>Preço Base</TableHead>
                 <TableHead className="text-right">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {products.length === 0 && (
+              {displayProducts.length === 0 && (
                 <TableRow>
                   <TableCell
-                    colSpan={5}
+                    colSpan={6}
                     className="text-center py-8 text-muted-foreground"
                   >
                     Nenhum produto cadastrado ainda.
                   </TableCell>
                 </TableRow>
               )}
-              {products.map((item) => (
+              {displayProducts.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>
                     <Avatar className="h-10 w-10">
@@ -87,13 +89,30 @@ export default async function ProductsPage(props: {
                       </AvatarFallback>
                     </Avatar>
                   </TableCell>
-                  <TableCell className="font-medium">
+                  <TableCell className="font-medium max-w-[200px] md:max-w-md">
                     <div className="flex flex-col">
-                      <span>{item.name}</span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="truncate">{item.name}</span>
+                      <span
+                        className="text-xs text-muted-foreground truncate"
+                        title={item.description || ""}
+                      >
                         {item.description}
                       </span>
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    {item.category?.name ? (
+                      <Badge
+                        variant="outline"
+                        className="text-gray-600 font-normal"
+                      >
+                        {item.category.name}
+                      </Badge>
+                    ) : (
+                      <span className="text-muted-foreground text-xs italic">
+                        Sem Categoria
+                      </span>
+                    )}
                   </TableCell>
                   <TableCell>
                     {item.type === "COMPOSITE" && (

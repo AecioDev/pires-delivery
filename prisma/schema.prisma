@@ -19,15 +19,32 @@ model Organization {
   updatedAt DateTime @updatedAt
 
   // Store Settings
+  logoUrl       String?
   whatsappPhone String?
   isOpen        Boolean @default(true)
   deliveryFee   Decimal @default(0) @db.Decimal(10, 2)
 
   // Relations
-  members     Profile[]
-  ingredients Ingredient[]
-  products    Product[]
-  customers   Customer[]
+  members       Profile[]
+  ingredients   Ingredient[]
+  products      Product[]
+  customers     Customer[]
+  neighborhoods Neighborhood[]
+  categories    Category[]
+}
+
+model Category {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  name     String
+  sequence Int    @default(0) // For custom sorting on the storefront
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
 }
 
 model Profile {
@@ -81,7 +98,9 @@ model Product {
   description String?
   basePrice   Decimal @db.Decimal(10, 2)
   imageUrl    String?
-  categoryId  String? // Can be an enum or relation later
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
 
   type ProductType @default(ITEM)
 
@@ -233,4 +252,18 @@ enum OrderStatus {
   DELIVERING
   COMPLETED
   CANCELLED
+}
+
+model Neighborhood {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  name           String
+  fee            Decimal      @default(0) @db.Decimal(10, 2)
+  active         Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([organizationId, name])
+  @@index([organizationId])
 }

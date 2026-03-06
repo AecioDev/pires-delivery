@@ -24,7 +24,7 @@ const routes = [
   {
     label: "Cozinha (Pedidos)",
     icon: ChefHat,
-    href: "/admin/kitchen",
+    href: "/kitchen",
     color: "text-red-600",
   },
   {
@@ -65,21 +65,32 @@ const routes = [
   },
 ];
 
-export const Sidebar = () => {
+import Image from "next/image";
+
+interface SidebarProps {
+  storeName?: string;
+  logoUrl?: string | null;
+}
+
+export const Sidebar = ({
+  storeName = "Salgados.ai",
+  logoUrl,
+}: SidebarProps) => {
   const pathname = usePathname();
 
   return (
     <div className="flex flex-col h-full w-full bg-slate-900 text-white">
       <div className="flex-1 overflow-y-auto px-3 py-4">
         <Link href="/dashboard" className="flex items-center pl-3 mb-14">
-          <div className="relative w-8 h-8 mr-4">
-            {/* Logo placeholder */}
-            <div className="bg-linear-to-tr from-yellow-400 to-orange-600 w-full h-full rounded-full flex items-center justify-center font-bold text-xs text-black">
-              SA
-            </div>
+          <div className="relative w-8 h-8 mr-4 rounded-full overflow-hidden shrink-0 flex items-center justify-center bg-linear-to-tr from-yellow-400 to-orange-600 font-bold text-xs text-black">
+            {logoUrl ? (
+              <Image src={logoUrl} alt="Logo" fill className="object-cover" />
+            ) : (
+              <span>SA</span>
+            )}
           </div>
-          <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-yellow-400 to-orange-600">
-            Salgados.ai
+          <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-yellow-400 to-orange-600 truncate">
+            {storeName}
           </h1>
         </Link>
         <div className="space-y-1">
@@ -104,10 +115,10 @@ export const Sidebar = () => {
       </div>
       <div className="px-3 py-2 border-t border-slate-800">
         <Link
-          href="/admin/settings"
+          href="/settings"
           className={cn(
             "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
-            pathname === "/admin/settings"
+            pathname === "/settings"
               ? "text-white bg-white/10"
               : "text-zinc-400",
           )}

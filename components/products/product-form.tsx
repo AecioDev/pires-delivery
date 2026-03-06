@@ -18,11 +18,13 @@ import { toast } from "sonner";
 import { UploadButton } from "@/lib/uploadthing";
 import Image from "next/image";
 import { CurrencyInput } from "@/components/ui/currency-input";
+import { CategorySelect } from "./category-select";
 
 // Reusing the type definition
 type Product = {
   id: string;
   name: string;
+  categoryId?: string | null;
   shortName?: string | null;
   description: string | null;
   basePrice: number | null;
@@ -38,15 +40,20 @@ type Product = {
 
 interface ProductFormProps {
   product?: Product;
+  defaultType?: "ITEM" | "COMPOSITE" | "COMPONENT";
   onSuccess?: () => void;
 }
 
-export function ProductForm({ product, onSuccess }: ProductFormProps) {
+export function ProductForm({
+  product,
+  defaultType,
+  onSuccess,
+}: ProductFormProps) {
   const [imageUrl, setImageUrl] = useState<string | null>(
     product?.imageUrl || null,
   );
   const [productType, setProductType] = useState<string>(
-    product?.type || "ITEM",
+    product?.type || defaultType || "ITEM",
   );
 
   // State for Currency Inputs
@@ -147,6 +154,10 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
           placeholder="Ex: Monte sua massa favorita na hora"
         />
       </div>
+      <CategorySelect
+        name="categoryId"
+        defaultValue={product?.categoryId || undefined}
+      />
       <div className="grid grid-cols-2 gap-4">
         <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="basePrice">Preço Venda (R$)</Label>

@@ -12,7 +12,12 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
-export const MobileSidebar = () => {
+interface MobileSidebarProps {
+  storeName: string;
+  logoUrl?: string | null;
+}
+
+export const MobileSidebar = ({ storeName, logoUrl }: MobileSidebarProps) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -35,7 +40,7 @@ export const MobileSidebar = () => {
         className="p-0 bg-slate-900 border-none w-72 text-white"
       >
         <SheetTitle className="hidden">Menu de Navegação</SheetTitle>
-        <Sidebar />
+        <Sidebar storeName={storeName} logoUrl={logoUrl} />
       </SheetContent>
     </Sheet>
   );

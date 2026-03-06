@@ -25,6 +25,7 @@ export async function getSettings() {
     select: {
       name: true,
       whatsappPhone: true,
+      logoUrl: true,
       isOpen: true,
       deliveryFee: true,
     }
@@ -42,6 +43,7 @@ export async function getSettings() {
 export async function updateSettings(data: {
   name: string;
   whatsappPhone: string | null;
+  logoUrl: string | null;
   isOpen: boolean;
   deliveryFee: number;
 }) {
@@ -52,6 +54,7 @@ export async function updateSettings(data: {
     data: {
       name: data.name,
       whatsappPhone: data.whatsappPhone,
+      logoUrl: data.logoUrl,
       isOpen: data.isOpen,
       deliveryFee: data.deliveryFee,
     },

@@ -40,6 +40,7 @@ export type OrganizationMinAggregateOutputType = {
   slug: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  logoUrl: string | null
   whatsappPhone: string | null
   isOpen: boolean | null
   deliveryFee: runtime.Decimal | null
@@ -51,6 +52,7 @@ export type OrganizationMaxAggregateOutputType = {
   slug: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  logoUrl: string | null
   whatsappPhone: string | null
   isOpen: boolean | null
   deliveryFee: runtime.Decimal | null
@@ -62,6 +64,7 @@ export type OrganizationCountAggregateOutputType = {
   slug: number
   createdAt: number
   updatedAt: number
+  logoUrl: number
   whatsappPhone: number
   isOpen: number
   deliveryFee: number
@@ -83,6 +86,7 @@ export type OrganizationMinAggregateInputType = {
   slug?: true
   createdAt?: true
   updatedAt?: true
+  logoUrl?: true
   whatsappPhone?: true
   isOpen?: true
   deliveryFee?: true
@@ -94,6 +98,7 @@ export type OrganizationMaxAggregateInputType = {
   slug?: true
   createdAt?: true
   updatedAt?: true
+  logoUrl?: true
   whatsappPhone?: true
   isOpen?: true
   deliveryFee?: true
@@ -105,6 +110,7 @@ export type OrganizationCountAggregateInputType = {
   slug?: true
   createdAt?: true
   updatedAt?: true
+  logoUrl?: true
   whatsappPhone?: true
   isOpen?: true
   deliveryFee?: true
@@ -203,6 +209,7 @@ export type OrganizationGroupByOutputType = {
   slug: string
   createdAt: Date
   updatedAt: Date
+  logoUrl: string | null
   whatsappPhone: string | null
   isOpen: boolean
   deliveryFee: runtime.Decimal
@@ -237,6 +244,7 @@ export type OrganizationWhereInput = {
   slug?: Prisma.StringFilter<"Organization"> | string
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
+  logoUrl?: Prisma.StringNullableFilter<"Organization"> | string | null
   whatsappPhone?: Prisma.StringNullableFilter<"Organization"> | string | null
   isOpen?: Prisma.BoolFilter<"Organization"> | boolean
   deliveryFee?: Prisma.DecimalFilter<"Organization"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -244,6 +252,8 @@ export type OrganizationWhereInput = {
   ingredients?: Prisma.IngredientListRelationFilter
   products?: Prisma.ProductListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
+  neighborhoods?: Prisma.NeighborhoodListRelationFilter
+  categories?: Prisma.CategoryListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -252,6 +262,7 @@ export type OrganizationOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   whatsappPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   isOpen?: Prisma.SortOrder
   deliveryFee?: Prisma.SortOrder
@@ -259,6 +270,8 @@ export type OrganizationOrderByWithRelationInput = {
   ingredients?: Prisma.IngredientOrderByRelationAggregateInput
   products?: Prisma.ProductOrderByRelationAggregateInput
   customers?: Prisma.CustomerOrderByRelationAggregateInput
+  neighborhoods?: Prisma.NeighborhoodOrderByRelationAggregateInput
+  categories?: Prisma.CategoryOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -270,6 +283,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Organization"> | string
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
+  logoUrl?: Prisma.StringNullableFilter<"Organization"> | string | null
   whatsappPhone?: Prisma.StringNullableFilter<"Organization"> | string | null
   isOpen?: Prisma.BoolFilter<"Organization"> | boolean
   deliveryFee?: Prisma.DecimalFilter<"Organization"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -277,6 +291,8 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   ingredients?: Prisma.IngredientListRelationFilter
   products?: Prisma.ProductListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
+  neighborhoods?: Prisma.NeighborhoodListRelationFilter
+  categories?: Prisma.CategoryListRelationFilter
 }, "id" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -285,6 +301,7 @@ export type OrganizationOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   whatsappPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   isOpen?: Prisma.SortOrder
   deliveryFee?: Prisma.SortOrder
@@ -304,6 +321,7 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringWithAggregatesFilter<"Organization"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
+  logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   whatsappPhone?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   isOpen?: Prisma.BoolWithAggregatesFilter<"Organization"> | boolean
   deliveryFee?: Prisma.DecimalWithAggregatesFilter<"Organization"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -315,6 +333,7 @@ export type OrganizationCreateInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -322,6 +341,8 @@ export type OrganizationCreateInput = {
   ingredients?: Prisma.IngredientCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
   customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -330,6 +351,7 @@ export type OrganizationUncheckedCreateInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -337,6 +359,8 @@ export type OrganizationUncheckedCreateInput = {
   ingredients?: Prisma.IngredientUncheckedCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -345,6 +369,7 @@ export type OrganizationUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -352,6 +377,8 @@ export type OrganizationUpdateInput = {
   ingredients?: Prisma.IngredientUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -360,6 +387,7 @@ export type OrganizationUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -367,6 +395,8 @@ export type OrganizationUncheckedUpdateInput = {
   ingredients?: Prisma.IngredientUncheckedUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -375,6 +405,7 @@ export type OrganizationCreateManyInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -386,6 +417,7 @@ export type OrganizationUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -397,6 +429,7 @@ export type OrganizationUncheckedUpdateManyInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -408,6 +441,7 @@ export type OrganizationCountOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
   whatsappPhone?: Prisma.SortOrder
   isOpen?: Prisma.SortOrder
   deliveryFee?: Prisma.SortOrder
@@ -423,6 +457,7 @@ export type OrganizationMaxOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
   whatsappPhone?: Prisma.SortOrder
   isOpen?: Prisma.SortOrder
   deliveryFee?: Prisma.SortOrder
@@ -434,6 +469,7 @@ export type OrganizationMinOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
   whatsappPhone?: Prisma.SortOrder
   isOpen?: Prisma.SortOrder
   deliveryFee?: Prisma.SortOrder
@@ -443,14 +479,14 @@ export type OrganizationSumOrderByAggregateInput = {
   deliveryFee?: Prisma.SortOrder
 }
 
-export type OrganizationNullableScalarRelationFilter = {
-  is?: Prisma.OrganizationWhereInput | null
-  isNot?: Prisma.OrganizationWhereInput | null
-}
-
 export type OrganizationScalarRelationFilter = {
   is?: Prisma.OrganizationWhereInput
   isNot?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationNullableScalarRelationFilter = {
+  is?: Prisma.OrganizationWhereInput | null
+  isNot?: Prisma.OrganizationWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -475,6 +511,20 @@ export type DecimalFieldUpdateOperationsInput = {
   decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
   multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type OrganizationCreateNestedOneWithoutCategoriesInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutCategoriesInput, Prisma.OrganizationUncheckedCreateWithoutCategoriesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutCategoriesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutCategoriesNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutCategoriesInput, Prisma.OrganizationUncheckedCreateWithoutCategoriesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutCategoriesInput
+  upsert?: Prisma.OrganizationUpsertWithoutCategoriesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutCategoriesInput, Prisma.OrganizationUpdateWithoutCategoriesInput>, Prisma.OrganizationUncheckedUpdateWithoutCategoriesInput>
 }
 
 export type OrganizationCreateNestedOneWithoutMembersInput = {
@@ -535,18 +585,119 @@ export type OrganizationUpdateOneRequiredWithoutCustomersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutCustomersInput, Prisma.OrganizationUpdateWithoutCustomersInput>, Prisma.OrganizationUncheckedUpdateWithoutCustomersInput>
 }
 
+export type OrganizationCreateNestedOneWithoutNeighborhoodsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutNeighborhoodsInput, Prisma.OrganizationUncheckedCreateWithoutNeighborhoodsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutNeighborhoodsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutNeighborhoodsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutNeighborhoodsInput, Prisma.OrganizationUncheckedCreateWithoutNeighborhoodsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutNeighborhoodsInput
+  upsert?: Prisma.OrganizationUpsertWithoutNeighborhoodsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutNeighborhoodsInput, Prisma.OrganizationUpdateWithoutNeighborhoodsInput>, Prisma.OrganizationUncheckedUpdateWithoutNeighborhoodsInput>
+}
+
+export type OrganizationCreateWithoutCategoriesInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  logoUrl?: string | null
+  whatsappPhone?: string | null
+  isOpen?: boolean
+  deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  members?: Prisma.ProfileCreateNestedManyWithoutOrganizationInput
+  ingredients?: Prisma.IngredientCreateNestedManyWithoutOrganizationInput
+  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutCategoriesInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  logoUrl?: string | null
+  whatsappPhone?: string | null
+  isOpen?: boolean
+  deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  members?: Prisma.ProfileUncheckedCreateNestedManyWithoutOrganizationInput
+  ingredients?: Prisma.IngredientUncheckedCreateNestedManyWithoutOrganizationInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutCategoriesInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutCategoriesInput, Prisma.OrganizationUncheckedCreateWithoutCategoriesInput>
+}
+
+export type OrganizationUpsertWithoutCategoriesInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutCategoriesInput, Prisma.OrganizationUncheckedUpdateWithoutCategoriesInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutCategoriesInput, Prisma.OrganizationUncheckedCreateWithoutCategoriesInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutCategoriesInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutCategoriesInput, Prisma.OrganizationUncheckedUpdateWithoutCategoriesInput>
+}
+
+export type OrganizationUpdateWithoutCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  members?: Prisma.ProfileUpdateManyWithoutOrganizationNestedInput
+  ingredients?: Prisma.IngredientUpdateManyWithoutOrganizationNestedInput
+  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  members?: Prisma.ProfileUncheckedUpdateManyWithoutOrganizationNestedInput
+  ingredients?: Prisma.IngredientUncheckedUpdateManyWithoutOrganizationNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
 export type OrganizationCreateWithoutMembersInput = {
   id?: string
   name: string
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   ingredients?: Prisma.IngredientCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
   customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutMembersInput = {
@@ -555,12 +706,15 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   ingredients?: Prisma.IngredientUncheckedCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutMembersInput = {
@@ -585,12 +739,15 @@ export type OrganizationUpdateWithoutMembersInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ingredients?: Prisma.IngredientUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutMembersInput = {
@@ -599,12 +756,15 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ingredients?: Prisma.IngredientUncheckedUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutIngredientsInput = {
@@ -613,12 +773,15 @@ export type OrganizationCreateWithoutIngredientsInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
   customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutIngredientsInput = {
@@ -627,12 +790,15 @@ export type OrganizationUncheckedCreateWithoutIngredientsInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileUncheckedCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutIngredientsInput = {
@@ -657,12 +823,15 @@ export type OrganizationUpdateWithoutIngredientsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutIngredientsInput = {
@@ -671,12 +840,15 @@ export type OrganizationUncheckedUpdateWithoutIngredientsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileUncheckedUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutProductsInput = {
@@ -685,12 +857,15 @@ export type OrganizationCreateWithoutProductsInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileCreateNestedManyWithoutOrganizationInput
   ingredients?: Prisma.IngredientCreateNestedManyWithoutOrganizationInput
   customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutProductsInput = {
@@ -699,12 +874,15 @@ export type OrganizationUncheckedCreateWithoutProductsInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileUncheckedCreateNestedManyWithoutOrganizationInput
   ingredients?: Prisma.IngredientUncheckedCreateNestedManyWithoutOrganizationInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutProductsInput = {
@@ -729,12 +907,15 @@ export type OrganizationUpdateWithoutProductsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileUpdateManyWithoutOrganizationNestedInput
   ingredients?: Prisma.IngredientUpdateManyWithoutOrganizationNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutProductsInput = {
@@ -743,12 +924,15 @@ export type OrganizationUncheckedUpdateWithoutProductsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileUncheckedUpdateManyWithoutOrganizationNestedInput
   ingredients?: Prisma.IngredientUncheckedUpdateManyWithoutOrganizationNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCustomersInput = {
@@ -757,12 +941,15 @@ export type OrganizationCreateWithoutCustomersInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileCreateNestedManyWithoutOrganizationInput
   ingredients?: Prisma.IngredientCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCustomersInput = {
@@ -771,12 +958,15 @@ export type OrganizationUncheckedCreateWithoutCustomersInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  logoUrl?: string | null
   whatsappPhone?: string | null
   isOpen?: boolean
   deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileUncheckedCreateNestedManyWithoutOrganizationInput
   ingredients?: Prisma.IngredientUncheckedCreateNestedManyWithoutOrganizationInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCustomersInput = {
@@ -801,12 +991,15 @@ export type OrganizationUpdateWithoutCustomersInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileUpdateManyWithoutOrganizationNestedInput
   ingredients?: Prisma.IngredientUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCustomersInput = {
@@ -815,12 +1008,99 @@ export type OrganizationUncheckedUpdateWithoutCustomersInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   members?: Prisma.ProfileUncheckedUpdateManyWithoutOrganizationNestedInput
   ingredients?: Prisma.IngredientUncheckedUpdateManyWithoutOrganizationNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
+  neighborhoods?: Prisma.NeighborhoodUncheckedUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutNeighborhoodsInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  logoUrl?: string | null
+  whatsappPhone?: string | null
+  isOpen?: boolean
+  deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  members?: Prisma.ProfileCreateNestedManyWithoutOrganizationInput
+  ingredients?: Prisma.IngredientCreateNestedManyWithoutOrganizationInput
+  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutNeighborhoodsInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  logoUrl?: string | null
+  whatsappPhone?: string | null
+  isOpen?: boolean
+  deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  members?: Prisma.ProfileUncheckedCreateNestedManyWithoutOrganizationInput
+  ingredients?: Prisma.IngredientUncheckedCreateNestedManyWithoutOrganizationInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutNeighborhoodsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutNeighborhoodsInput, Prisma.OrganizationUncheckedCreateWithoutNeighborhoodsInput>
+}
+
+export type OrganizationUpsertWithoutNeighborhoodsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutNeighborhoodsInput, Prisma.OrganizationUncheckedUpdateWithoutNeighborhoodsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutNeighborhoodsInput, Prisma.OrganizationUncheckedCreateWithoutNeighborhoodsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutNeighborhoodsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutNeighborhoodsInput, Prisma.OrganizationUncheckedUpdateWithoutNeighborhoodsInput>
+}
+
+export type OrganizationUpdateWithoutNeighborhoodsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  members?: Prisma.ProfileUpdateManyWithoutOrganizationNestedInput
+  ingredients?: Prisma.IngredientUpdateManyWithoutOrganizationNestedInput
+  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutNeighborhoodsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  members?: Prisma.ProfileUncheckedUpdateManyWithoutOrganizationNestedInput
+  ingredients?: Prisma.IngredientUncheckedUpdateManyWithoutOrganizationNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -833,6 +1113,8 @@ export type OrganizationCountOutputType = {
   ingredients: number
   products: number
   customers: number
+  neighborhoods: number
+  categories: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -840,6 +1122,8 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   ingredients?: boolean | OrganizationCountOutputTypeCountIngredientsArgs
   products?: boolean | OrganizationCountOutputTypeCountProductsArgs
   customers?: boolean | OrganizationCountOutputTypeCountCustomersArgs
+  neighborhoods?: boolean | OrganizationCountOutputTypeCountNeighborhoodsArgs
+  categories?: boolean | OrganizationCountOutputTypeCountCategoriesArgs
 }
 
 /**
@@ -880,6 +1164,20 @@ export type OrganizationCountOutputTypeCountCustomersArgs<ExtArgs extends runtim
   where?: Prisma.CustomerWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountNeighborhoodsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NeighborhoodWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CategoryWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -887,6 +1185,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   slug?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  logoUrl?: boolean
   whatsappPhone?: boolean
   isOpen?: boolean
   deliveryFee?: boolean
@@ -894,6 +1193,8 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   ingredients?: boolean | Prisma.Organization$ingredientsArgs<ExtArgs>
   products?: boolean | Prisma.Organization$productsArgs<ExtArgs>
   customers?: boolean | Prisma.Organization$customersArgs<ExtArgs>
+  neighborhoods?: boolean | Prisma.Organization$neighborhoodsArgs<ExtArgs>
+  categories?: boolean | Prisma.Organization$categoriesArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -903,6 +1204,7 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   slug?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  logoUrl?: boolean
   whatsappPhone?: boolean
   isOpen?: boolean
   deliveryFee?: boolean
@@ -914,6 +1216,7 @@ export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   slug?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  logoUrl?: boolean
   whatsappPhone?: boolean
   isOpen?: boolean
   deliveryFee?: boolean
@@ -925,17 +1228,20 @@ export type OrganizationSelectScalar = {
   slug?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  logoUrl?: boolean
   whatsappPhone?: boolean
   isOpen?: boolean
   deliveryFee?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "createdAt" | "updatedAt" | "whatsappPhone" | "isOpen" | "deliveryFee", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "createdAt" | "updatedAt" | "logoUrl" | "whatsappPhone" | "isOpen" | "deliveryFee", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
   ingredients?: boolean | Prisma.Organization$ingredientsArgs<ExtArgs>
   products?: boolean | Prisma.Organization$productsArgs<ExtArgs>
   customers?: boolean | Prisma.Organization$customersArgs<ExtArgs>
+  neighborhoods?: boolean | Prisma.Organization$neighborhoodsArgs<ExtArgs>
+  categories?: boolean | Prisma.Organization$categoriesArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -948,6 +1254,8 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     ingredients: Prisma.$IngredientPayload<ExtArgs>[]
     products: Prisma.$ProductPayload<ExtArgs>[]
     customers: Prisma.$CustomerPayload<ExtArgs>[]
+    neighborhoods: Prisma.$NeighborhoodPayload<ExtArgs>[]
+    categories: Prisma.$CategoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -955,6 +1263,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     slug: string
     createdAt: Date
     updatedAt: Date
+    logoUrl: string | null
     whatsappPhone: string | null
     isOpen: boolean
     deliveryFee: runtime.Decimal
@@ -1356,6 +1665,8 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   ingredients<T extends Prisma.Organization$ingredientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$ingredientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IngredientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   products<T extends Prisma.Organization$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customers<T extends Prisma.Organization$customersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$customersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  neighborhoods<T extends Prisma.Organization$neighborhoodsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$neighborhoodsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NeighborhoodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  categories<T extends Prisma.Organization$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1390,6 +1701,7 @@ export interface OrganizationFieldRefs {
   readonly slug: Prisma.FieldRef<"Organization", 'String'>
   readonly createdAt: Prisma.FieldRef<"Organization", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Organization", 'DateTime'>
+  readonly logoUrl: Prisma.FieldRef<"Organization", 'String'>
   readonly whatsappPhone: Prisma.FieldRef<"Organization", 'String'>
   readonly isOpen: Prisma.FieldRef<"Organization", 'Boolean'>
   readonly deliveryFee: Prisma.FieldRef<"Organization", 'Decimal'>
@@ -1874,6 +2186,54 @@ export type Organization$customersArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.CustomerScalarFieldEnum | Prisma.CustomerScalarFieldEnum[]
+}
+
+/**
+ * Organization.neighborhoods
+ */
+export type Organization$neighborhoodsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Neighborhood
+   */
+  select?: Prisma.NeighborhoodSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Neighborhood
+   */
+  omit?: Prisma.NeighborhoodOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NeighborhoodInclude<ExtArgs> | null
+  where?: Prisma.NeighborhoodWhereInput
+  orderBy?: Prisma.NeighborhoodOrderByWithRelationInput | Prisma.NeighborhoodOrderByWithRelationInput[]
+  cursor?: Prisma.NeighborhoodWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NeighborhoodScalarFieldEnum | Prisma.NeighborhoodScalarFieldEnum[]
+}
+
+/**
+ * Organization.categories
+ */
+export type Organization$categoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
+  orderBy?: Prisma.CategoryOrderByWithRelationInput | Prisma.CategoryOrderByWithRelationInput[]
+  cursor?: Prisma.CategoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CategoryScalarFieldEnum | Prisma.CategoryScalarFieldEnum[]
 }
 
 /**
