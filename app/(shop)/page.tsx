@@ -9,7 +9,7 @@ import { CategoryNav } from "@/components/shop/category-nav";
 
 export default async function ShopHomePage() {
   const settings = await getSettings();
-  const storeName = settings?.name || "Salgados.ai";
+  const storeName = settings?.name || "Pires Delivery";
   const logoUrl = settings?.logoUrl || "/logo_sf.png";
 
   const allProducts = await getProducts();

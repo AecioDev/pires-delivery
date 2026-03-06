@@ -2,8 +2,8 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Salgados.ai",
-    short_name: "Salgados.ai",
+    name: "Pires Delivery",
+    short_name: "Pires Delivery",
     description: "Peça seus salgados favoritos de forma rápida e fácil.",
     start_url: "/",
     display: "standalone",

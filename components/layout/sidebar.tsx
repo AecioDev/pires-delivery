@@ -73,7 +73,7 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({
-  storeName = "Salgados.ai",
+  storeName = "Pires Delivery",
   logoUrl,
 }: SidebarProps) => {
   const pathname = usePathname();

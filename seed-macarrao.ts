@@ -9,13 +9,23 @@ async function main() {
   }
   const orgId = org.id;
 
-  // Ensure category "O Melhor Macarrão" exists
+  // Ensure category "Clássicos da Casa Pires" exists
   let catMacarrao = await prisma.category.findFirst({
-    where: { organizationId: orgId, name: { contains: "O Melhor Macarrão", mode: "insensitive" } }
+    where: { organizationId: orgId, name: { contains: "Clássicos da Casa Pires", mode: "insensitive" } }
   });
   if (!catMacarrao) {
     catMacarrao = await prisma.category.create({
-      data: { name: "O Melhor Macarrão!", organizationId: orgId, sequence: 1 }
+      data: { name: "Clássicos da Casa Pires", organizationId: orgId, sequence: 1 }
+    });
+  }
+
+  // Ensure category "Crocantes da Casa Pires" exists
+  let catFrangos = await prisma.category.findFirst({
+    where: { organizationId: orgId, name: { contains: "Crocantes da Casa Pires", mode: "insensitive" } }
+  });
+  if (!catFrangos) {
+    catFrangos = await prisma.category.create({
+      data: { name: "Crocantes da Casa Pires", organizationId: orgId, sequence: 2 }
     });
   }
 
@@ -25,22 +35,30 @@ async function main() {
   });
   if (!catBebidas) {
     catBebidas = await prisma.category.create({
-      data: { name: "Bebidas", organizationId: orgId, sequence: 2 }
+      data: { name: "Bebidas", organizationId: orgId, sequence: 3 }
     });
   }
 
   const pastas = [
-    { name: "Macarrão Pomodoro", description: "Pomodoro é uma delicioso molho à base de tomate italiano, com um toque de manjericão fresco. Oferece uma acidez equilibrada ...", price: 23.90 },
-    { name: "Macarrão Broccoli", description: "Cremoso e feito com brócolis frescos com toque de bacon. Ideal para nossas massas e nhoque, oferecendo uma combinação leve...", price: 34.90 },
-    { name: "Macarrão Parisiense", description: "Parisiense, cremoso e aveludado, feito com presunto picado, ervilhas frescas e um toque de bacon. Sua suavidade tornam este...", price: 34.90 },
-    { name: "Macarrão Funghi", description: "Funghi cremoso e aromático, feito com cogumelos selecionados e um toque de vinho branco, trazendo um sabor intenso e...", price: 29.90 },
-    { name: "Macarrão Frango com Requeijão Cremoso", description: "Frango desfiado ao molho bechamel, com milho-verde e pedacinhos de bacon. Finalizado com mussarela derretida,...", price: 42.90 },
-    { name: "Macarrão Camarão Rosé", description: "Camarão rosé combina o sabor delicado dos camarões com molho pomodoro, molho branco e um toque de especiarias....", price: 47.90 },
-    { name: "Macarrão Bolonhesa", description: "O clássico italiano, rico e cheio de sabor, preparado com carne moída, tomates italiano e especiarias. Cozido lentamente para...", price: 29.90 },
-    { name: "Macarrão Cheddar com Bacon", description: "Cheddar cremoso e irresistível. Combinado com um toque de bacon. Ideal para nossas massas e nhoque, este molho traz uma...", price: 39.90 },
-    { name: "Macarrão Quatro Queijos", description: "Quatro queijos, uma combinação irresistível de queijos com um toque de bacon em um creme suave, sabor equilibrado do...", price: 39.90 },
-    { name: "Macarrão Cheddar com Carne e Bacon", description: "Cheddar cremoso e irresistível. Combinado com um toque de carne e bacon. Ideal para nossas massas e nhoques, este molho...", price: 42.90 },
-    { name: "Macarrão Ragu de Costela", description: "Ragu de costela macia, cozido por horas com ervas e vinho, em um molho rico e aromático. Servido sobre masssa italiana ou...", price: 39.90 },
+    { name: "Pomodoro", description: "O clássico que nunca falha em dar água na boca! Nosso Pomodoro traz um molho vermelhinho e super aveludado, com aquele toque inconfundível de manjericão fresco e acidez na medida certa. Abraça perfeitamente a sua massa ou nhoque da Casa Pires, e ainda ganha aquela chuvinha de queijo e cebolinha fresca pra finalizar. Simplesmente irresistível!", price: 23.90 },
+    { name: "Bolonhesa", description: "Aquele clássico suculento que não tem erro! Nossa Bolonhesa traz carne moída refogada no capricho, super bem temperada em um molho encorpado e cozido lentamente. Abraça perfeitamente a sua massa ou nhoque, ganhando aquela chuva de queijo e cebolinha fresca pra finalizar. Bom demais!", price: 29.90 },
+    { name: "Brocoli", description: "Aquele toque defumado irresistível mergulhado na cremosidade! Nosso molho une brócolis frescos e pedacinhos de bacon em um creme leve, saboroso e super equilibrado. Envolve perfeitamente a sua massa ou nhoque, e ainda ganha aquela chuva de queijo e cebolinha fresca pra finalizar. Surpreendente e delicioso!", price: 34.90 },
+    { name: "Cheddar com Bacon", description: "Pura perdição em forma de molho! Nosso Cheddar super cremoso derrete na boca, abraçando sua massa ou nhoque junto com pedacinhos irresistíveis de bacon. Uma verdadeira explosão de sabor que você também pode turbinar pedindo a versão com carne! Pra fechar, aquela chuva de queijo e cebolinha fresca. É de lamber os beiços!", price: 39.90 },
+    { name: "Parisiense", description: "Aquele molho aveludado que é puro conforto! Nosso Parisiense traz um creme super suave e envolvente com presunto picadinho, ervilhas frescas e um toque especial de bacon. Abraça com perfeição a sua massa ou nhoque, e ganha aquela chuvinha de queijo e cebolinha fresca pra fechar. Delicadeza e muito sabor!", price: 34.90 },
+    { name: "Quatro Queijos", description: "Uma explosão de cremosidade pra ninguém botar defeito! Nosso molho traz o equilíbrio perfeito entre parmesão, muçarela, gorgonzola e provolone derretidos em um creme super suave, com aquele toque irresistível de bacon. Abraça a sua massa ou nhoque de um jeito surreal e, pra fechar, ganha aquela chuvinha de queijo e cebolinha fresca. Derrete na boca!", price: 39.90 },
+    { name: "Funghi", description: "Sofisticação que desmancha na boca! Nosso molho Funghi é super cremoso e aromático, preparado com cogumelos selecionados e aquele toque especial de vinho branco. Traz um sabor marcante que abraça perfeitamente a sua massa ou nhoque. E pra fechar com chave de ouro, ganha aquela chuvinha de queijo e cebolinha fresca. Uma verdadeira experiência!", price: 29.90 },
+    { name: "Cheddar com Carne e Bacon", description: "Pura perdição elevada ao quadrado! Nosso Cheddar super cremoso derrete na boca, abraçando a sua massa ou nhoque junto com carne suculenta e pedacinhos irresistíveis de bacon. Uma verdadeira explosão de sabor pra quem ama um prato indulgente! Pra fechar, ganha aquela chuvinha de queijo e cebolinha fresca. Impossível resistir!", price: 42.90 },
+    { name: "Frango com Requeijão Cremoso", description: "O queridinho que abraça o estômago! Nosso frango desfiado vem mergulhado em um molho bechamel super cremoso, com milho-verde e pedacinhos de bacon. Envolve a sua massa ou nhoque com perfeição e ganha aquela finalização caprichada: mussarela derretida, muito requeijão cremoso, mais bacon e cebolinha fresca. Não tem como dar errado!", price: 42.90 },
+    { name: "Ragu de Fraldinha", description: "O verdadeiro sabor do aconchego! Nosso Ragu traz uma fraldinha super macia, cozida lentamente por horas com ervas e um toque de vinho até desmanchar. Forma um molho rico e aromático que abraça perfeitamente a sua massa ou nhoque. Pra fechar com chave de ouro, ganha aquela chuvinha de queijo e cebolinha fresca. Uma experiência única e cheia de sabor!", price: 39.90 }
+  ];
+
+  const frangos = [
+    { name: "Coxa e Sobrecoxa (O clássico suculento)", description: 'O verdadeiro segredo da casa! Cortes super carnudos preparados com uma técnica exclusiva da chef: fritos até a pele ficar incrivelmente sequinha e estalando de tão crocante, sem usar nenhum tipo de empanado. Por dentro, aquela carne suculenta e marinada no capricho. Uma experiência surreal!', price: 25.00 },
+    { name: "Coxa Crocante (O clássico pra comer com as mãos)", description: 'Feita pra comer com as mãos e lamber os dedos! Nossas coxas de frango trazem muito tempero e são preparadas com a técnica exclusiva da chef Fátima. O resultado? Uma pele douradinha, sequinha e absurdamente estalante, sem usar nenhuma grama de farinha ou empanado, guardando uma carne super macia e suculenta por dentro. Bom demais!', price: 20.00 },
+    { name: "Sobrecoxa (A rainha da suculência)", description: 'O corte favorito de quem ama sabor em dobro! A sobrecoxa já é a parte mais suculenta do frango, e aqui ela ganha um toque de mestre. Frita até a pele ficar fininha, hiper crocante e purinha – totalmente sem empanar. Muito tempero, maciez extrema desmanchando por dentro e aquela crocância surreal por fora. Uma verdadeira experiência!', price: 22.00 },
+    { name: "Coxinha da Asa (O petisco que vicia)", description: 'Aquele petisco impossível de comer um só! Nossas coxinhas da asa levam nosso tempero especial e são fritas na nossa técnica secreta. O resultado? Uma pele douradinha, absurdamente crocante e zero empanada, guardando uma carne macia e suculenta por dentro. É de lamber os dedos!', price: 28.00 },
+    { name: "Tulipas (A queridinha da galera)", description: 'A majestade do nosso cardápio! Tulipas suculentas preparadas com a nossa receita exclusiva que garante uma crocância surreal e sequinha por fora, sem precisar de massa ou farinha. O tempero da chef é um espetáculo à parte que deixa a carne molhadinha por dentro. Vai devorar rapidinho!', price: 30.00 },
+    { name: "Combo Casa Pires (Mix de cortes)", description: 'Na dúvida, vá de tudo! Um mix perfeito e bem servido com nossos melhores cortes, todos preparados na nossa técnica secreta. Crocância absurda por fora, carne desmanchando de suculenta por dentro e totalmente sem empanado. A pedida certeira para compartilhar!', price: 45.00 }
   ];
 
   const drinks = [
@@ -63,10 +81,26 @@ async function main() {
         description: p.description,
         basePrice: p.price,
         categoryId: catMacarrao.id,
-        type: "ITEM"
+        type: "ITEM",
+        status: "ACTIVE"
       }
     });
     console.log(`Created Pasta: ${p.name}`);
+  }
+
+  for (const f of frangos) {
+    await prisma.product.create({
+      data: {
+        organizationId: orgId,
+        name: f.name,
+        description: f.description,
+        basePrice: f.price,
+        categoryId: catFrangos.id,
+        type: "ITEM",
+        status: "ACTIVE"
+      }
+    });
+    console.log(`Created Frango Frito: ${f.name}`);
   }
 
   for (const d of drinks) {
@@ -77,7 +111,8 @@ async function main() {
         description: "",
         basePrice: d.price,
         categoryId: catBebidas.id,
-        type: "ITEM"
+        type: "ITEM",
+        status: "ACTIVE"
       }
     });
     console.log(`Created Drink: ${d.name}`);

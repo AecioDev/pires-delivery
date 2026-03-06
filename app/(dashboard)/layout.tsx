@@ -15,13 +15,13 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [storeName, setStoreName] = useState("Salgados.ai");
+  const [storeName, setStoreName] = useState("Pires Delivery");
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
   useEffect(() => {
     getSettings().then((settings) => {
       if (settings) {
-        setStoreName(settings.name || "Salgados.ai");
+        setStoreName(settings.name || "Pires Delivery");
         setLogoUrl(settings.logoUrl || null);
       }
     });

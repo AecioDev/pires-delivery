@@ -96,7 +96,7 @@ export default function LoginPage() {
       </Card>
 
       <div className="mt-8 text-xs text-slate-500 text-center">
-        &copy; {new Date().getFullYear()} Salgados.ai. Todos os direitos
+        &copy; {new Date().getFullYear()} Pires Delivery. Todos os direitos
         reservados.
       </div>
     </div>

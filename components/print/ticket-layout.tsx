@@ -34,7 +34,7 @@ export function TicketLayout({ order }: TicketProps) {
       className="hidden print:block p-2 text-black font-mono text-[12px] leading-tight max-w-[80mm] mx-auto bg-white"
     >
       <div className="text-center border-b border-black pb-2 mb-2">
-        <h1 className="text-lg font-bold uppercase">Salgados.ai</h1>
+        <h1 className="text-lg font-bold uppercase">Pires Delivery</h1>
         <p>Pedido #{order.id.slice(0, 8)}</p>
         <p>
           {format(new Date(order.createdAt), "dd/MM/yyyy HH:mm", {
@@ -112,7 +112,7 @@ export function TicketLayout({ order }: TicketProps) {
 
       <div className="text-center mt-4 mb-8">
         <p>Obrigado pela preferência!</p>
-        <p>www.salgados.ai</p>
+        <p>Casa Pires Delivery</p>
       </div>
     </div>
   );
