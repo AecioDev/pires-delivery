@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/dialog";
 import { Plus, Pencil } from "lucide-react";
 import { ProductForm } from "./product-form";
+import { getCategories } from "@/actions/categories";
 
-// Define a simplified Product type based on what we use
+type Category = { id: string; name: string };
+
 type Product = {
   id: string;
   name: string;
@@ -29,6 +31,7 @@ interface ProductDialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   defaultType?: "ITEM" | "COMPOSITE" | "COMPONENT";
+  categories?: Category[];
 }
 
 export function ProductDialog({
@@ -36,13 +39,26 @@ export function ProductDialog({
   open: controlledOpen,
   onOpenChange: setControlledOpen,
   defaultType,
+  categories: initialCategories,
 }: ProductDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>(
+    initialCategories ?? [],
+  );
   const isEdit = !!product;
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
   const setOpen = isControlled ? setControlledOpen : setInternalOpen;
+
+  // Busca categorias ao abrir o dialog se não foram passadas via props
+  useEffect(() => {
+    if (open && categories.length === 0) {
+      getCategories().then((data) =>
+        setCategories(data.map((c) => ({ id: c.id, name: c.name }))),
+      );
+    }
+  }, [open, categories.length]);
 
   function handleOpenChange(val: boolean) {
     if (setOpen) setOpen(val);
@@ -78,6 +94,7 @@ export function ProductDialog({
           <ProductForm
             product={product}
             defaultType={defaultType}
+            categories={categories}
             onSuccess={() => handleOpenChange(false)}
           />
         </div>

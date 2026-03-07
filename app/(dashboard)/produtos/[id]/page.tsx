@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { ModifierList } from "@/components/products/modifier-list";
 import { ProductForm } from "@/components/products/product-form";
 import { getLinkableProducts } from "@/actions/modifiers";
+import { getCategories } from "@/actions/categories";
 
 export default async function ProductDetailsPage({
   params,
@@ -37,10 +38,12 @@ export default async function ProductDetailsPage({
   });
 
   const linkableProductsPromise = getLinkableProducts();
+  const categoriesPromise = getCategories();
 
-  const [product, linkableProducts] = await Promise.all([
+  const [product, linkableProducts, categories] = await Promise.all([
     productPromise,
     linkableProductsPromise,
+    categoriesPromise,
   ]);
 
   if (!product) {
@@ -112,7 +115,9 @@ export default async function ProductDetailsPage({
                     | "INACTIVE"
                     | "UNAVAILABLE",
                   imageUrl: product.imageUrl,
+                  categoryId: product.categoryId,
                 }}
+                categories={categories}
               />
             </CardContent>
           </Card>

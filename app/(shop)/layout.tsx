@@ -15,7 +15,8 @@ export default function ShopLayout({
   return (
     <div className="fixed inset-0 bg-neutral-100 dark:bg-neutral-900 flex justify-center overflow-hidden">
       <div className="w-full max-w-[600px] h-full bg-gray-50 dark:bg-neutral-950 flex flex-col relative shadow-2xl">
-        <main className="flex-1 overflow-y-auto p-4 scrollbar-hide">
+        {/* main: flex-1 sem overflow para que a page.tsx controle o scroll */}
+        <main className="flex-1 flex flex-col min-h-0 overflow-hidden">
           {children}
         </main>
         <BottomNav />

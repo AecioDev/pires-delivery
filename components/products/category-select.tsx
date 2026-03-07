@@ -1,17 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { getCategories, createCategory } from "@/actions/categories";
+import { useState } from "react";
+import { createCategory } from "@/actions/categories";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Plus, Loader2 } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -25,55 +18,28 @@ import { toast } from "sonner";
 
 type Category = { id: string; name: string };
 
-export function CategorySelect({
-  defaultValue,
-  name,
-}: {
-  defaultValue?: string;
+interface CategorySelectProps {
   name: string;
-}) {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+  defaultValue?: string | null;
+  categories: Category[];
+}
+
+/**
+ * CategorySelect — select controlado com estado inicializado pelo defaultValue.
+ * Usa <select> nativo para serialização natural no FormData de Server Actions.
+ * Categorias são passadas como props (buscadas no servidor) — sem fetch async.
+ */
+export function CategorySelect({
+  name,
+  defaultValue,
+  categories: initialCategories,
+}: CategorySelectProps) {
+  // Estado controlado — inicializa com o valor existente do produto
+  const [value, setValue] = useState<string>(defaultValue ?? "");
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [open, setOpen] = useState(false);
   const [newCatName, setNewCatName] = useState("");
   const [creating, setCreating] = useState(false);
-  const [value, setValue] = useState<string>("");
-
-  const fetchCategories = async (): Promise<Category[]> => {
-    setLoading(true);
-    try {
-      const data = await getCategories();
-      setCategories(data);
-      return data;
-    } catch (e) {
-      console.error(e);
-      return [];
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Carrega categorias e, após o carregamento, define o valor selecionado
-  useEffect(() => {
-    fetchCategories().then((data) => {
-      if (defaultValue && data.some((c) => c.id === defaultValue)) {
-        setValue(defaultValue);
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Sincroniza caso o defaultValue mude (ex: ao abrir o dialog de edição de um produto diferente)
-  useEffect(() => {
-    if (!loading && categories.length > 0) {
-      if (defaultValue && categories.some((c) => c.id === defaultValue)) {
-        setValue(defaultValue);
-      } else {
-        setValue("");
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultValue]);
 
   const handleCreate = async () => {
     if (!newCatName.trim()) {
@@ -88,14 +54,14 @@ export function CategorySelect({
 
     if (res.success) {
       toast.success("Categoria criada!");
-      const capturedName = newCatName;
+      const capturedName = newCatName.trim();
       setNewCatName("");
       setOpen(false);
-      const data = await fetchCategories();
-      const newCat = data.find((c) => c.name === capturedName);
-      if (newCat) {
-        setValue(newCat.id);
-      }
+      // Adiciona a nova categoria na lista local e já seleciona ela
+      const tempId = `temp-${Date.now()}`;
+      const newCat = { id: tempId, name: capturedName };
+      setCategories((prev) => [...prev, newCat]);
+      setValue(tempId);
     } else {
       toast.error(res.message);
     }
@@ -105,32 +71,26 @@ export function CategorySelect({
     <div className="grid w-full items-center gap-1.5">
       <Label htmlFor={name}>Categoria</Label>
       <div className="flex gap-2 items-center">
-        <Select
+        {/*
+          Select controlado:
+          - value={value}: mostra o valor correto na tela sempre
+          - onChange: atualiza o estado quando o usuário muda
+          - name={name}: o form serializa automaticamente pelo DOM nativo
+        */}
+        <select
+          id={name}
           name={name}
           value={value}
-          onValueChange={setValue}
-          disabled={loading}
+          onChange={(e) => setValue(e.target.value)}
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <SelectTrigger className="w-full">
-            <SelectValue
-              placeholder={
-                loading ? "Carregando..." : "Selecione uma categoria"
-              }
-            />
-          </SelectTrigger>
-          <SelectContent>
-            {categories.map((c) => (
-              <SelectItem key={c.id} value={c.id}>
-                {c.name}
-              </SelectItem>
-            ))}
-            {!loading && categories.length === 0 && (
-              <SelectItem value="__empty__" disabled>
-                Nenhuma categoria
-              </SelectItem>
-            )}
-          </SelectContent>
-        </Select>
+          <option value="">Selecione uma categoria</option>
+          {categories.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name}
+            </option>
+          ))}
+        </select>
 
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>

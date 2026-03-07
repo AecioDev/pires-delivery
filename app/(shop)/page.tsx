@@ -1,156 +1,96 @@
-import { getProducts } from "@/actions/products";
-import { getSettings } from "@/actions/settings";
-import { ProductCard } from "@/components/shop/product-card";
-import { FeaturedProductCard } from "@/components/shop/featured-product-card";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
-import Image from "next/image";
+import { getShopData } from "@/actions/shop";
 import { CategoryNav } from "@/components/shop/category-nav";
+import { ProductCard } from "@/components/shop/product-card";
+import { ShopSearch } from "@/components/shop/shop-search";
+import Image from "next/image";
+import { Clock, MapPin } from "lucide-react";
 
 export default async function ShopHomePage() {
-  const settings = await getSettings();
-  const storeName = settings?.name || "Pires Delivery";
-  const logoUrl = settings?.logoUrl || "/logo_sf.png";
-
-  const allProducts = await getProducts();
-  const shopProducts = allProducts.filter(
-    (p) => p.type !== "COMPONENT" && p.status !== "INACTIVE",
+  const { storeName, logoUrl, categories } = await getShopData();
+  const totalProducts = categories.reduce(
+    (acc, c) => acc + c.products.length,
+    0,
   );
 
-  // Filter highlights
-  const highlights = shopProducts.filter((p) => {
-    const isDish = p.isDishOfTheDay;
-    const promo = p.promotionalPrice ? Number(p.promotionalPrice) : 0;
-    const base = Number(p.basePrice);
-    return isDish || (promo > 0 && promo < base);
-  });
-
-  // Group products by category
-  const categoriesMap = new Map<string, typeof shopProducts>();
-
-  shopProducts.forEach((p) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const catName = (p as any).category?.name || "Diversos";
-    if (!categoriesMap.has(catName)) {
-      categoriesMap.set(catName, []);
-    }
-    categoriesMap.get(catName)!.push(p);
-  });
-
-  // Extract keys and ensure "Diversos" is at the end if present
-  let categoryNames = Array.from(categoriesMap.keys());
-  if (categoryNames.includes("Diversos")) {
-    categoryNames = categoryNames.filter((c) => c !== "Diversos");
-    categoryNames.push("Diversos");
-  }
-
   return (
-    <div className="space-y-6 pb-8">
-      {/* Store Banner / Info */}
-      <div className="bg-white dark:bg-neutral-900 rounded-xl p-4 shadow-sm border dark:border-neutral-800 text-center space-y-2">
-        <div className="flex justify-center mb-2">
-          <Image
-            src={logoUrl}
-            alt={`${storeName} Logo`}
-            width={100}
-            height={100}
-            className="h-24 w-auto object-contain"
-          />
-        </div>
-        <h1 className="text-xl font-bold">{storeName}</h1>
-        <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center gap-2">
-          <span>Aberto agora</span>
-          <span>•</span>
-          <span>20-30 min</span>
-        </div>
-      </div>
-
-      {/* Search Bar */}
-      <div className="relative shadow-sm hover:shadow-md transition-shadow">
-        <Search className="absolute left-3.5 top-3.5 h-5 w-5 text-muted-foreground" />
-        <Input
-          type="search"
-          placeholder="Buscar no cardápio..."
-          className="w-full bg-white dark:bg-neutral-900 pl-11 h-12 rounded-xl border-gray-200 dark:border-neutral-700 focus:border-orange-500 focus:ring-orange-500/20 text-base"
-        />
-      </div>
-
-      {/* Categories Nav (Sticky & Interactive) */}
-      <section>
-        <CategoryNav categories={categoryNames} />
-      </section>
-
-      {/* Destaques (Dynamic) */}
-      {highlights.length > 0 && (
-        <section>
-          <h2 className="text-lg font-bold text-foreground mb-3 px-1">
-            Destaques
-          </h2>
-          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
-            {highlights.map((p) => (
-              <FeaturedProductCard
-                key={p.id}
-                product={{
-                  id: p.id,
-                  name: p.name,
-                  description: p.description,
-                  basePrice: Number(p.basePrice),
-                  promotionalPrice: p.promotionalPrice
-                    ? Number(p.promotionalPrice)
-                    : null,
-                  serves: p.serves,
-                  isDishOfTheDay: p.isDishOfTheDay,
-                  imageUrl: p.imageUrl,
-                  type: p.type,
-                  status: p.status,
-                  modifiers: [], // Not fetched in list view
-                }}
+    // Fills the main container, split into fixed top + scrollable products
+    <div className="flex flex-col h-full min-h-0">
+      {/* ── TOP: non-scrolling zone ── */}
+      <div className="flex-none px-4 pt-4 pb-0 space-y-3">
+        {/* Store Header */}
+        <div className="bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden shadow-sm border dark:border-neutral-800">
+          <div className="h-20 bg-linear-to-br from-orange-600 to-orange-400 flex items-center justify-center relative">
+            <div className="absolute inset-0 bg-black/10" />
+            <div className="relative z-10 w-16 h-16 rounded-xl overflow-hidden border-4 border-white dark:border-neutral-800 shadow-lg bg-white">
+              <Image
+                src={logoUrl}
+                alt={`${storeName} Logo`}
+                fill
+                className="object-contain p-1"
               />
-            ))}
+            </div>
           </div>
-        </section>
-      )}
+          <div className="px-4 py-2.5 text-center">
+            <h1 className="text-base font-bold text-gray-900 dark:text-gray-100">
+              {storeName}
+            </h1>
+            <div className="flex items-center justify-center gap-4 mt-1 text-xs text-gray-500 dark:text-gray-400">
+              <span className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
+                Aberto
+              </span>
+              <span className="flex items-center gap-1">
+                <Clock className="w-3 h-3" />
+                20–40 min
+              </span>
+              <span className="flex items-center gap-1">
+                <MapPin className="w-3 h-3" />
+                {totalProducts} itens
+              </span>
+            </div>
+          </div>
+        </div>
 
-      {/* Default padding block for sticky offset compensation */}
-      <div className="pt-2">
-        {categoryNames.map((catName) => {
-          const productsGroup = categoriesMap.get(catName) || [];
+        {/* Search */}
+        <ShopSearch categories={categories} />
 
-          return (
-            <section key={catName} id={catName} className="mb-8 scroll-mt-28">
-              <h2 className="text-xl font-bold text-foreground mb-4 px-1 pb-2 border-b">
-                {catName}
-              </h2>
+        {/* Category nav — no longer sticky, just sits in the fixed top zone */}
+        <CategoryNav categories={categories} />
+      </div>
+
+      {/* ── BOTTOM: scrollable products only ── */}
+      <div
+        id="shop-scroll-container"
+        className="flex-1 overflow-y-auto min-h-0 px-4 pb-4 scrollbar-hide"
+      >
+        <div className="space-y-8 pt-4">
+          {categories.map((cat) => (
+            <section key={cat.id} id={`cat-${cat.id}`}>
+              <div className="flex items-center gap-3 mb-3">
+                <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">
+                  {cat.name}
+                </h2>
+                <div className="flex-1 h-px bg-gray-100 dark:bg-neutral-800" />
+                <span className="text-xs text-muted-foreground">
+                  {cat.products.length} itens
+                </span>
+              </div>
               <div className="space-y-3">
-                {productsGroup.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={{
-                      id: product.id,
-                      name: product.name,
-                      description: product.description,
-                      basePrice: Number(product.basePrice),
-                      promotionalPrice: product.promotionalPrice
-                        ? Number(product.promotionalPrice)
-                        : null,
-                      serves: product.serves,
-                      imageUrl: product.imageUrl,
-                      type: product.type,
-                      status: product.status,
-                      modifiers: [],
-                    }}
-                  />
+                {cat.products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             </section>
-          );
-        })}
+          ))}
 
-        {shopProducts.length === 0 && (
-          <div className="text-center py-10 text-muted-foreground">
-            <p>Nenhum item disponível.</p>
-          </div>
-        )}
+          {categories.length === 0 && (
+            <div className="text-center py-16 text-muted-foreground">
+              <p className="text-4xl mb-3">🍽️</p>
+              <p className="font-medium">Cardápio em breve</p>
+              <p className="text-sm mt-1">Nenhum item disponível no momento.</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

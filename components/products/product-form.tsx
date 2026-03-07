@@ -40,15 +40,19 @@ type Product = {
   imageUrl: string | null;
 };
 
+type Category = { id: string; name: string };
+
 interface ProductFormProps {
   product?: Product;
   defaultType?: "ITEM" | "COMPOSITE" | "COMPONENT";
+  categories: Category[];
   onSuccess?: () => void;
 }
 
 export function ProductForm({
   product,
   defaultType,
+  categories,
   onSuccess,
 }: ProductFormProps) {
   const [imageUrl, setImageUrl] = useState<string | null>(
@@ -161,7 +165,8 @@ export function ProductForm({
       </div>
       <CategorySelect
         name="categoryId"
-        defaultValue={product?.categoryId || undefined}
+        defaultValue={product?.categoryId}
+        categories={categories}
       />
       <div className="grid grid-cols-2 gap-4">
         <div className="grid w-full items-center gap-1.5">
