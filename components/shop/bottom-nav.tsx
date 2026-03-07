@@ -33,7 +33,7 @@ export function BottomNav() {
   }
 
   return (
-    <div className="w-full border-t bg-white shrink-0 z-50 pb-safe">
+    <div className="w-full border-t dark:border-neutral-800 bg-white dark:bg-neutral-900 shrink-0 z-50 pb-safe">
       <div className="flex h-16 items-center justify-around px-4">
         {navItems.map((item) => {
           const isActive =

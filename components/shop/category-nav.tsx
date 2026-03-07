@@ -54,7 +54,7 @@ export function CategoryNav({ categories }: { categories: string[] }) {
   if (categories.length === 0) return null;
 
   return (
-    <div className="sticky top-0 z-40 bg-gray-50/95 backdrop-blur-sm pt-2 pb-3 -mx-4 px-4 shadow-sm">
+    <div className="sticky top-0 z-40 bg-gray-50/95 dark:bg-neutral-950/95 backdrop-blur-sm pt-2 pb-3 -mx-4 px-4 shadow-sm">
       <div
         ref={navRef}
         className="flex gap-3 overflow-x-auto scrollbar-hide snap-x"
@@ -67,7 +67,7 @@ export function CategoryNav({ categories }: { categories: string[] }) {
             className={`flex-none px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap snap-start ${
               activeCategory === cat
                 ? "bg-orange-600 text-white shadow-md scale-105"
-                : "bg-white text-gray-600 border border-gray-200"
+                : "bg-white dark:bg-neutral-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-neutral-700"
             }`}
           >
             {cat}

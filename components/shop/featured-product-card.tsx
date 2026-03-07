@@ -80,9 +80,9 @@ export function FeaturedProductCard({
         }}
         className={`group h-full ${isAvailable ? "cursor-pointer block" : "cursor-not-allowed opacity-75 grayscale-[0.2]"}`}
       >
-        <Card className="overflow-hidden border-0 shadow-md rounded-2xl bg-white h-full relative flex flex-col">
+        <Card className="overflow-hidden border-0 shadow-md rounded-2xl bg-white dark:bg-neutral-900 h-full relative flex flex-col">
           {/* Image Area */}
-          <div className="h-32 sm:h-40 bg-gray-100 relative overflow-hidden">
+          <div className="h-32 sm:h-40 bg-gray-100 dark:bg-neutral-800 relative overflow-hidden">
             {product.imageUrl ? (
               <Image
                 src={product.imageUrl}
@@ -115,7 +115,7 @@ export function FeaturedProductCard({
 
           {/* Content Area */}
           <CardContent className="p-3 flex-1 flex flex-col">
-            <h3 className="font-bold text-gray-900 line-clamp-2 leading-tight mb-auto group-hover:text-orange-600 transition-colors">
+            <h3 className="font-bold text-gray-900 dark:text-gray-100 line-clamp-2 leading-tight mb-auto group-hover:text-orange-600 transition-colors">
               {product.name}
             </h3>
 
@@ -138,7 +138,7 @@ export function FeaturedProductCard({
                   </span>
                 )}
                 <span
-                  className={`font-bold ${isPromo ? "text-red-500" : "text-gray-900"}`}
+                  className={`font-bold ${isPromo ? "text-red-500" : "text-gray-900 dark:text-gray-100"}`}
                 >
                   {product.type === "COMPOSITE" ? "A partir de " : ""}
                   {new Intl.NumberFormat("pt-BR", {

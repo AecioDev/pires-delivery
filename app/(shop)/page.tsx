@@ -47,7 +47,7 @@ export default async function ShopHomePage() {
   return (
     <div className="space-y-6 pb-8">
       {/* Store Banner / Info */}
-      <div className="bg-white rounded-xl p-4 shadow-sm border text-center space-y-2">
+      <div className="bg-white dark:bg-neutral-900 rounded-xl p-4 shadow-sm border dark:border-neutral-800 text-center space-y-2">
         <div className="flex justify-center mb-2">
           <Image
             src={logoUrl}
@@ -58,7 +58,7 @@ export default async function ShopHomePage() {
           />
         </div>
         <h1 className="text-xl font-bold">{storeName}</h1>
-        <div className="text-sm text-gray-500 flex items-center justify-center gap-2">
+        <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center gap-2">
           <span>Aberto agora</span>
           <span>•</span>
           <span>20-30 min</span>
@@ -71,7 +71,7 @@ export default async function ShopHomePage() {
         <Input
           type="search"
           placeholder="Buscar no cardápio..."
-          className="w-full bg-white pl-11 h-12 rounded-xl border-gray-200 focus:border-orange-500 focus:ring-orange-500/20 text-base"
+          className="w-full bg-white dark:bg-neutral-900 pl-11 h-12 rounded-xl border-gray-200 dark:border-neutral-700 focus:border-orange-500 focus:ring-orange-500/20 text-base"
         />
       </div>
 

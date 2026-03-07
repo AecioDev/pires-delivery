@@ -102,14 +102,14 @@ export function ProductCard({ product }: { product: ProductData }) {
         onClick={handleCardClick}
         className={`flex flex-row overflow-hidden border border-gray-100 shadow-sm rounded-lg p-3 gap-3 transition-colors relative group ${
           isAvailable
-            ? "bg-white hover:border-orange-200 cursor-pointer"
-            : "bg-gray-50 opacity-75 cursor-not-allowed grayscale-[0.2]"
+            ? "bg-white dark:bg-neutral-900 hover:border-orange-200 cursor-pointer"
+            : "bg-gray-50 dark:bg-neutral-900/50 opacity-75 cursor-not-allowed grayscale-[0.2]"
         }`}
       >
         {/* Text Content */}
         <div className="flex-1 flex flex-col justify-between py-1">
           <div>
-            <h3 className="font-semibold text-gray-900 line-clamp-2 mb-1 group-hover:text-orange-600 transition-colors">
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100 line-clamp-2 mb-1 group-hover:text-orange-600 transition-colors">
               {product.name}
             </h3>
             <p className="text-xs text-gray-500 line-clamp-1 leading-relaxed mb-2">
@@ -118,7 +118,7 @@ export function ProductCard({ product }: { product: ProductData }) {
 
             {/* Serves info */}
             {product.serves && product.serves > 1 && (
-              <div className="flex items-center gap-1 text-[10px] text-gray-500 bg-gray-50 mb-1 w-fit px-1.5 py-0.5 rounded">
+              <div className="flex items-center gap-1 text-[10px] text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-neutral-800 mb-1 w-fit px-1.5 py-0.5 rounded">
                 <Users className="w-3 h-3" />
                 <span>Serve até {product.serves} pessoas</span>
               </div>
@@ -174,7 +174,7 @@ export function ProductCard({ product }: { product: ProductData }) {
           ) : (
             <button
               onClick={handleQuickAdd}
-              className="absolute bottom-1 right-1 bg-white text-orange-600 rounded-full p-1.5 shadow-md active:scale-95 transition-transform hover:bg-orange-50 z-10"
+              className="absolute bottom-1 right-1 bg-white dark:bg-neutral-800 text-orange-600 rounded-full p-1.5 shadow-md active:scale-95 transition-transform hover:bg-orange-50 dark:hover:bg-neutral-700 z-10"
             >
               <Plus className="h-4 w-4" />
             </button>
@@ -185,7 +185,7 @@ export function ProductCard({ product }: { product: ProductData }) {
       {/* Details Modal (Only for Simple Products) */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-md p-0 overflow-hidden border-0 rounded-2xl">
-          <div className="relative h-48 bg-gray-100 w-full">
+          <div className="relative h-48 bg-gray-100 dark:bg-neutral-800 w-full">
             {product.imageUrl && (
               <Image
                 src={product.imageUrl}
