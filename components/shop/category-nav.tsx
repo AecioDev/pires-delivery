@@ -83,9 +83,17 @@ export function CategoryNav({ categories }: CategoryNavProps) {
             onClick={() => scrollTo(cat.id)}
             className={`flex-none flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all whitespace-nowrap ${
               activeId === cat.id
-                ? "bg-orange-600 text-white shadow-md"
+                ? "text-white shadow-md"
                 : "bg-white dark:bg-neutral-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-neutral-700"
             }`}
+            style={
+              activeId === cat.id
+                ? {
+                    background:
+                      "linear-gradient(135deg, #8B4513 0%, #C17A3C 50%, #D4A96A 100%)",
+                  }
+                : undefined
+            }
           >
             {cat.name}
             <span

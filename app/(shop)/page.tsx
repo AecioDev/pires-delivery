@@ -19,8 +19,14 @@ export default async function ShopHomePage() {
       <div className="flex-none px-4 pt-4 pb-0 space-y-3">
         {/* Store Header */}
         <div className="bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden shadow-sm border dark:border-neutral-800">
-          <div className="h-20 bg-linear-to-br from-orange-600 to-orange-400 flex items-center justify-center relative">
-            <div className="absolute inset-0 bg-black/10" />
+          <div
+            className="h-20 flex items-center justify-center relative"
+            style={{
+              background:
+                "linear-gradient(135deg, #8B4513 0%, #C17A3C 40%, #D4A96A 75%, #E8C99A 100%)",
+            }}
+          >
+            <div className="absolute inset-0 bg-black/5" />
             <div className="relative z-10 w-16 h-16 rounded-xl overflow-hidden border-4 border-white dark:border-neutral-800 shadow-lg bg-white">
               <Image
                 src={logoUrl}
