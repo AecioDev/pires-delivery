@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
 import { createProduct, updateProduct } from "@/actions/products";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,9 +19,10 @@ import { Trash2, ImageIcon, DollarSign, Package, Settings } from "lucide-react";
 import { toast } from "sonner";
 import { UploadButton } from "@/lib/uploadthing";
 import Image from "next/image";
-import Link from "next/link";
 import { CurrencyInput } from "@/components/ui/currency-input";
 import { CategorySelect } from "./category-select";
+
+// Reusing the type definition
 
 type Product = {
   id: string;
@@ -92,6 +94,7 @@ export function ProductForm({
   );
 
   const isEdit = !!product;
+  const router = useRouter();
 
   async function handleSubmit(formData: FormData) {
     let result;
@@ -340,11 +343,9 @@ export function ProductForm({
 
       {/* ── Ações ── */}
       <div className="flex justify-end pt-2 gap-2 border-t border-border">
-        <Link href="/produtos">
-          <Button type="button" variant="outline">
-            Voltar
-          </Button>
-        </Link>
+        <Button type="button" variant="outline" onClick={() => router.back()}>
+          Voltar
+        </Button>
         <SubmitButton isEdit={isEdit} />
       </div>
     </form>

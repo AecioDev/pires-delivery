@@ -320,7 +320,7 @@ function ModifierDialog({
               />
             </div>
 
-            <div className="flex items-center space-x-2 border p-3 rounded-md bg-slate-50">
+            <div className="flex items-center space-x-2 border p-3 rounded-md bg-muted/40">
               <Switch
                 name="enablePrice"
                 defaultChecked={modifier?.enablePrice ?? true}
@@ -546,7 +546,7 @@ function OptionDialog({
                     onChange={(e) => setQuantity(Number(e.target.value))}
                     required
                   />
-                  <span className="text-sm font-medium w-12 text-center bg-slate-100 py-2 rounded-md">
+                  <span className="text-sm font-medium w-12 text-center bg-muted text-foreground py-2 rounded-md border border-border">
                     {unit}
                   </span>
                 </div>

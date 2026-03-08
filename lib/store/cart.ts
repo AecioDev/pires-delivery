@@ -28,12 +28,13 @@ export interface SerializedProduct {
 }
 
 export interface CartItem {
-  id: string; // Unique ID for the cart line item (e.g. productID + selections hash)
+  id: string;
   product: SerializedProduct;
   quantity: number;
-  selections: Record<string, string[]>; // modifierId -> optionIds
+  selections: Record<string, string[]>;
   unitPrice: number;
   totalPrice: number;
+  notes?: string;
 }
 
 interface CartState {
@@ -52,14 +53,9 @@ export const useCartStore = create<CartState>()(
       items: [],
       
       addItem: (newItem) => {
-        const { product, selections, quantity, unitPrice } = newItem;
-        
-        // Simple distinct ID generation based on content to allow grouping exact same customisations?
-        // For now, let's treat every add as a unique line item unless we want to merge.
-        // Merging complex custom objects is tricky. Let's start with unique items.
-        // Or unique based on JSON.stringify(selections) + productId.
+        const { product, selections, quantity, unitPrice, notes } = newItem;
         const selectionKey = JSON.stringify(selections);
-        const uniqueId = `${product.id}-${selectionKey}`;
+        const uniqueId = `${product.id}-${selectionKey}-${notes ?? ""}`;
 
         set((state) => {
             const existingItemIndex = state.items.findIndex(i => i.id === uniqueId);

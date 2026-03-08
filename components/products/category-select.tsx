@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createCategory } from "@/actions/categories";
+import { createCategory, getCategories } from "@/actions/categories";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Plus, Loader2 } from "lucide-react";
@@ -50,21 +50,28 @@ export function CategorySelect({
     const fd = new FormData();
     fd.append("name", newCatName);
     const res = await createCategory(fd);
-    setCreating(false);
 
     if (res.success) {
       toast.success("Categoria criada!");
       const capturedName = newCatName.trim();
       setNewCatName("");
       setOpen(false);
-      // Adiciona a nova categoria na lista local e já seleciona ela
-      const tempId = `temp-${Date.now()}`;
-      const newCat = { id: tempId, name: capturedName };
-      setCategories((prev) => [...prev, newCat]);
-      setValue(tempId);
+
+      // Busca a lista real do banco para pegar o ID verdadeiro
+      // (evita usar tempId que causaria FK constraint violation no Prisma)
+      try {
+        const fresh = await getCategories();
+        const freshMapped = fresh.map((c) => ({ id: c.id, name: c.name }));
+        setCategories(freshMapped);
+        const newCat = freshMapped.find((c) => c.name === capturedName);
+        if (newCat) setValue(newCat.id);
+      } catch {
+        // fallback silencioso se o fetch falhar
+      }
     } else {
       toast.error(res.message);
     }
+    setCreating(false);
   };
 
   return (
