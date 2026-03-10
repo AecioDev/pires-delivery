@@ -2,21 +2,42 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const adminCookie = request.cookies.get('admin_token');
-  const url = request.nextUrl.clone();
+  const { pathname } = request.nextUrl;
 
-  // If there's no admin_token cookie, redirect to /login
-  if (!adminCookie || adminCookie.value !== 'authenticated') {
-    url.pathname = '/login';
+  // ── Proteção das rotas admin ──
+  const adminCookie = request.cookies.get('admin_token');
+  const isAdminRoute = [
+    '/dashboard', '/kitchen', '/settings', '/insumos',
+    '/produtos', '/receitas', '/clientes', '/pdv', '/financeiro'
+  ].some((p) => pathname.startsWith(p));
+
+  if (isAdminRoute) {
+    if (!adminCookie || adminCookie.value !== 'authenticated') {
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
+  }
+
+  // ── Tela de boas-vindas (loja) ──
+  // Só redireciona para /bem-vindo se o cliente acessar a raiz /
+  // e ainda não viu a tela (sem cookie cpd_welcomed)
+  const welcomed = request.cookies.get('cpd_welcomed');
+  const isShopRoot = pathname === '/';
+
+  if (isShopRoot && !welcomed) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/bem-vindo';
     return NextResponse.redirect(url);
   }
 
   return NextResponse.next();
 }
 
-// Config to only run middleware on specific protected admin paths
 export const config = {
   matcher: [
+    '/',
     '/dashboard/:path*',
     '/kitchen/:path*',
     '/settings/:path*',
@@ -25,6 +46,6 @@ export const config = {
     '/receitas/:path*',
     '/clientes/:path*',
     '/pdv/:path*',
-    '/financeiro/:path*'
-  ]
+    '/financeiro/:path*',
+  ],
 };

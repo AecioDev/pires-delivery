@@ -112,37 +112,47 @@ export function ProductCard({ product }: { product: ProductData }) {
             <h3 className="font-semibold text-gray-900 dark:text-gray-100 line-clamp-2 mb-1 group-hover:text-orange-600 transition-colors">
               {product.name}
             </h3>
-            <p className="text-xs text-gray-500 line-clamp-1 leading-relaxed mb-2">
+            <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-2">
               {product.description || "Delicioso e feito na hora."}
             </p>
 
-            {/* Serves info */}
-            {product.serves && product.serves > 1 && (
-              <div className="flex items-center gap-1 text-[10px] text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-neutral-800 mb-1 w-fit px-1.5 py-0.5 rounded">
-                <Users className="w-3 h-3" />
-                <span>Serve até {product.serves} pessoas</span>
-              </div>
-            )}
+            {/* Serves info — movido para dentro, será mostrado ao lado do preço */}
           </div>
 
-          <div className="font-medium text-gray-900 flex items-center gap-2">
-            {isComposite ? "A partir de " : ""}
+          {/* Preço + Serve info na mesma linha */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="font-medium text-gray-900 dark:text-gray-100 flex items-center gap-1.5">
+              {isComposite ? (
+                <span className="text-xs font-normal text-gray-500 dark:text-gray-400">
+                  A partir de
+                </span>
+              ) : (
+                ""
+              )}
 
-            {isPromo && (
-              <span className="text-xs text-gray-400 line-through">
+              {isPromo && (
+                <span className="text-xs text-gray-400 line-through">
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(basePriceNum)}
+                </span>
+              )}
+
+              <span className={isPromo ? "text-red-500 font-bold" : ""}>
                 {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
-                }).format(basePriceNum)}
+                }).format(finalPrice)}
               </span>
-            )}
+            </div>
 
-            <span className={isPromo ? "text-red-500 font-bold" : ""}>
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(finalPrice)}
-            </span>
+            {product.serves && product.serves > 1 && (
+              <div className="flex items-center gap-1 text-[10px] text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-neutral-800 px-1.5 py-0.5 rounded shrink-0">
+                <Users className="w-3 h-3" />
+                <span>Serve até {product.serves}</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -169,7 +179,7 @@ export function ProductCard({ product }: { product: ProductData }) {
             </div>
           ) : isComposite ? (
             <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-[2px] text-white text-[10px] font-bold text-center py-0.5">
-              Montar
+              Quero Este
             </div>
           ) : (
             <button

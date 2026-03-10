@@ -39,8 +39,9 @@ export default async function ProductPage({
     id: product.id,
     name: product.name,
     description: product.description,
-    basePrice: Number(product.basePrice), // fallback if .toNumber() not avail on some versions, but usually is. Number(decimal) works too.
+    basePrice: Number(product.basePrice),
     imageUrl: product.imageUrl,
+    type: product.type,
     modifiers: product.modifiers.map((m) => ({
       id: m.id,
       name: m.name,
